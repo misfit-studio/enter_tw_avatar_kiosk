@@ -1,5 +1,4 @@
 import 'package:enter_bravo_kiosk/screens/calibration.dart';
-import 'package:enter_bravo_kiosk/screens/evaluation.dart';
 import 'package:enter_bravo_kiosk/screens/home.dart';
 import 'package:enter_bravo_kiosk/screens/language.dart';
 import 'package:enter_bravo_kiosk/screens/quiz/assessment_question.dart';
@@ -58,10 +57,6 @@ final router = GoRouter(
     GoRoute(
       path: '/quiz/presentation',
       builder: (context, state) => const PresentationQuestion(),
-    ),
-    GoRoute(
-      path: '/evaluation',
-      builder: (context, state) => const EvaluationScreen(),
     ),
     GoRoute(
       path: '/result',

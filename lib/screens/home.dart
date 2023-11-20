@@ -11,9 +11,12 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Listen to the pointer controller. When the device is picked up it goes into the calibration state
+    // and we navigate to the calibration screen.
     ref.listen(pointerDeviceStateNotifierProvider, (prev, next) {
       if (next == PointerState.calibrating) {
-        Navigator.pushNamed(context, '/calibration');
+        ref.read(questionnaireStateProvider.notifier).reset();
+        context.go('/calibration');
       }
     });
 
@@ -21,6 +24,8 @@ class HomeScreen extends ConsumerWidget {
       backgroundColor: Colors.black,
       body: GestureDetector(
         onTap: () {
+          // This navigation is only for testing purposes.
+          // Normally the user would pick up the device to start the calibration.
           ref.read(questionnaireStateProvider.notifier).reset();
           context.go('/calibration');
         },
