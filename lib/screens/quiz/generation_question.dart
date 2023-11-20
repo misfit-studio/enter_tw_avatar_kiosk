@@ -63,8 +63,6 @@ class _GenerationQuestionState extends ConsumerState<GenerationQuestion> {
       }
     }
 
-    print($s);
-
     return Scaffold(
       backgroundColor: EnterThemeColors.orange,
       body: Column(
