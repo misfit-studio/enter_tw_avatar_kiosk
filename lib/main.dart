@@ -26,7 +26,7 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
 
   await initSpineFlutter(enableMemoryDebugging: false);
-  await UsbSerialService().init();
+  //await UsbSerialService().init();
 
   runApp(ProviderScope(
     observers: [
