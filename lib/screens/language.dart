@@ -2,6 +2,7 @@ import 'package:enter_bravo_kiosk/components/container_button.dart';
 import 'package:enter_bravo_kiosk/state/intl_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,26 +19,56 @@ class LanguageScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
-        padding: const EdgeInsets.all(264.0),
+        padding: EdgeInsets.all(264.sp),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             EnterContainerButton(
-              trailing: SvgPicture.asset("assets/icons/arrow.svg"),
+              expanded: true,
+              trailing: SvgPicture.asset(
+                "assets/icons/arrow.svg",
+                width: 48.sp,
+              ),
               onTap: () => setLanguage(Language.de),
-              child: const Text("Deutsch"),
+              child: Text(
+                "Deutsch",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontSize: 84.sp),
+              ),
             ),
-            const SizedBox(height: 48),
+            SizedBox(height: 48.sp),
             EnterContainerButton(
-              trailing: SvgPicture.asset("assets/icons/arrow.svg"),
+              expanded: true,
+              trailing: SvgPicture.asset(
+                "assets/icons/arrow.svg",
+                width: 48.sp,
+              ),
               onTap: () => setLanguage(Language.en),
-              child: const Text("English"),
+              child: Text(
+                "English",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontSize: 84.sp),
+              ),
             ),
-            const SizedBox(height: 48),
+            SizedBox(height: 48.sp),
             EnterContainerButton(
-              trailing: SvgPicture.asset("assets/icons/arrow.svg"),
+              expanded: true,
+              trailing: SvgPicture.asset(
+                "assets/icons/arrow.svg",
+                width: 48.sp,
+              ),
               onTap: () => setLanguage(Language.fr),
-              child: const Text("Français"),
+              child: Text(
+                "Français",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontSize: 84.sp),
+              ),
             ),
           ],
         ),

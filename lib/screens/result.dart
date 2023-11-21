@@ -9,6 +9,7 @@ import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:enter_bravo_kiosk/utils/enter_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spine_flutter/spine_flutter.dart' as spine;
@@ -249,8 +250,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                       clipBehavior: Clip.hardEdge,
                       child: ContinuousAnimatedRotation(
                         duration: Duration(
-                            milliseconds:
-                                _iconRotationSpeedTween.value.toInt()),
+                          milliseconds: _iconRotationSpeedTween.value.toInt(),
+                        ),
                         child: AnimatedBuilder(
                             animation: _iconColorTween,
                             builder: (context, child) {
@@ -258,8 +259,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                                 opacity: 0.75,
                                 child: SvgPicture.asset(
                                   'assets/icons/enter_icon.svg',
-                                  width: _iconSizeTween.value,
-                                  height: _iconSizeTween.value,
+                                  width: _iconSizeTween.value.w,
+                                  height: _iconSizeTween.value.h,
                                   color: _introController.isCompleted
                                       ? _iconColorTween.value
                                       : _iconIntroColorTween.value,
@@ -274,6 +275,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
               child: Image.asset(
                 'assets/images/result_avatar_backlight.png',
                 opacity: _avatarBacklightOpacityTween,
+                width: 1080.w,
               ),
             ),
             if (_avatar != null)
@@ -284,8 +286,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                     return Opacity(
                       opacity: _avatarOpacityTween.value,
                       child: SizedBox(
-                        width: 984,
-                        height: 984,
+                        width: 984.w,
+                        height: 984.h,
                         child: spine.SpineWidget.fromDrawable(
                           _avatar!.drawable,
                           _spineController!,

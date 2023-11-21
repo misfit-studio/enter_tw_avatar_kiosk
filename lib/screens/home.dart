@@ -4,6 +4,7 @@ import 'package:enter_bravo_kiosk/state/questionnaire_provider.dart';
 import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -33,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
           children: [
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(96.0),
+                padding: EdgeInsets.all(96.sp),
                 child: TextCarousel(
                   strings: const [
                     "Wie stehst du zu mir?",
@@ -54,7 +55,7 @@ class HomeScreen extends ConsumerWidget {
               right: 0,
               left: 0,
               child: Padding(
-                padding: const EdgeInsets.all(96.0),
+                padding: EdgeInsets.all(96.sp),
                 child: TextCarousel(
                   strings: const [
                     "Finde deinen Techniktyp!\nNimm das Gerät in die Hand, um zu beginnen.",

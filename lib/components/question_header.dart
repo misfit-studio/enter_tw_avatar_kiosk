@@ -1,6 +1,7 @@
 import 'package:enter_bravo_kiosk/state/questionnaire_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class QuestionHeader extends ConsumerWidget {
@@ -16,18 +17,18 @@ class QuestionHeader extends ConsumerWidget {
     final state = ref.watch(questionnaireStateProvider);
 
     return SizedBox(
-      height: 480,
+      height: 480.h,
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(48.0),
+            padding: EdgeInsets.all(48.sp),
             child: AnimatedSmoothIndicator(
               activeIndex: state.questionIndex,
               count: 7,
-              effect: const ExpandingDotsEffect(
-                dotWidth: 24,
-                dotHeight: 24,
-                spacing: 24,
+              effect: ExpandingDotsEffect(
+                dotWidth: 24.sp,
+                dotHeight: 24.sp,
+                spacing: 24.sp,
                 dotColor: Colors.white,
                 activeDotColor: Colors.white,
               ),
@@ -35,9 +36,9 @@ class QuestionHeader extends ConsumerWidget {
           ),
           const Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 96,
-              vertical: 48,
+            padding: EdgeInsets.symmetric(
+              horizontal: 96.sp,
+              vertical: 48.sp,
             ),
             child: Text(
               questionText,

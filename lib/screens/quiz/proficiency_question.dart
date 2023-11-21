@@ -10,6 +10,7 @@ import 'package:enter_bravo_kiosk/state/questionnaire_provider.dart';
 import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -38,13 +39,13 @@ class ProficiencyQuestion extends HookConsumerWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 96.0),
+              padding: EdgeInsets.symmetric(horizontal: 96.sp),
               child: Stack(
                 children: [
                   GravityCircles(index: selectedProficiency.value?.index ?? -1),
                   Center(
                     child: SizedBox(
-                      width: 180,
+                      width: 180.sp,
                       child: EnterContainerButton(
                         onTap: () {
                           selectedProficiency.value = Proficiency.nerd;
@@ -61,9 +62,9 @@ class ProficiencyQuestion extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    left: 80,
-                    top: 360,
-                    width: 290,
+                    left: 80.sp,
+                    top: 360.sp,
+                    width: 280.w,
                     child: EnterContainerButton(
                       onTap: () {
                         selectedProficiency.value = Proficiency.interested;
@@ -79,9 +80,9 @@ class ProficiencyQuestion extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    left: 480,
-                    top: 720,
-                    width: 325,
+                    left: 510.sp,
+                    top: 720.sp,
+                    width: 280.w,
                     child: EnterContainerButton(
                       onTap: () {
                         selectedProficiency.value = Proficiency.interested;
@@ -97,9 +98,9 @@ class ProficiencyQuestion extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    left: 380,
-                    top: 930,
-                    width: 325,
+                    left: 190.sp,
+                    top: 930.sp,
+                    width: 220.w,
                     child: EnterContainerButton(
                       onTap: () {
                         selectedProficiency.value = Proficiency.casual;
@@ -144,12 +145,25 @@ class GravityCircles extends StatelessWidget {
       children: [
         Center(
           child: Container(
-            width: 856,
-            height: 856,
+            width: 856.w,
+            height: 856.h,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.black,
-                width: 10,
+                width: 10.sp,
+              ),
+              borderRadius: BorderRadius.circular(888.sp),
+            ),
+          ),
+        ),
+        Center(
+          child: Container(
+            width: 588.w,
+            height: 588.h,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+                width: 10.sp,
               ),
               borderRadius: BorderRadius.circular(888),
             ),
@@ -157,27 +171,14 @@ class GravityCircles extends StatelessWidget {
         ),
         Center(
           child: Container(
-            width: 588,
-            height: 588,
+            width: 324.w,
+            height: 324.h,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.black,
-                width: 10,
+                width: 10.sp,
               ),
-              borderRadius: BorderRadius.circular(888),
-            ),
-          ),
-        ),
-        Center(
-          child: Container(
-            width: 324,
-            height: 324,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-                width: 10,
-              ),
-              borderRadius: BorderRadius.circular(888),
+              borderRadius: BorderRadius.circular(888.sp),
             ),
           ),
         ),
@@ -189,14 +190,14 @@ class GravityCircles extends StatelessWidget {
                 children: [
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    width: index * 132,
+                    width: index * 132.sp,
                   ),
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: 48.sp,
+                    height: 48.sp,
                     decoration: BoxDecoration(
                       color: Colors.black,
-                      borderRadius: BorderRadius.circular(888),
+                      borderRadius: BorderRadius.circular(888.sp),
                     ),
                   )
                 ],

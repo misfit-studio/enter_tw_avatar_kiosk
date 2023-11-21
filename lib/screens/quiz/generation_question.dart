@@ -7,6 +7,7 @@ import 'package:enter_bravo_kiosk/state/questionnaire_provider.dart';
 import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:enter_bravo_kiosk/utils/chooser_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -72,15 +73,15 @@ class _GenerationQuestionState extends ConsumerState<GenerationQuestion> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 96.0),
+              padding: EdgeInsets.symmetric(horizontal: 96.sp),
               child: Stack(
                 children: List.generate(_boxes.length, (index) {
                   final box = _boxes[index];
                   return Positioned(
-                    left: box.x,
-                    top: box.y,
-                    width: box.width,
-                    height: box.height,
+                    left: box.x.sp,
+                    top: box.y.sp,
+                    width: box.width.w,
+                    height: box.height.h,
                     child: ImageChooserBox(
                       selected: box.selected,
                       onTap: () {

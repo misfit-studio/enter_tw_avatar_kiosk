@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EnterThemeColors {
   static const red = Color(0xFFFF3333);
@@ -18,43 +19,43 @@ final baseTheme = ThemeData(
 
 final enterTextTheme = baseTheme.textTheme.copyWith(
   headlineLarge: baseTheme.textTheme.headlineLarge!.copyWith(
-    fontSize: 148,
+    fontSize: 148.sp,
     height: 1.18,
     fontWeight: FontWeight.w700,
   ),
   headlineMedium: baseTheme.textTheme.headlineMedium!.copyWith(
-    fontSize: 92,
+    fontSize: 92.sp,
     height: 1.05,
     fontWeight: FontWeight.w700,
   ),
   titleLarge: baseTheme.textTheme.titleLarge!.copyWith(
-    fontSize: 92,
+    fontSize: 92.sp,
     height: 1.05,
     fontWeight: FontWeight.w700,
   ),
   titleMedium: baseTheme.textTheme.titleMedium!.copyWith(
-    fontSize: 64,
+    fontSize: 64.sp,
     height: 1.05,
     fontWeight: FontWeight.w700,
   ),
   titleSmall: baseTheme.textTheme.titleSmall!.copyWith(
-    fontSize: 48,
+    fontSize: 48.sp,
     fontWeight: FontWeight.w700,
   ),
   labelLarge: baseTheme.textTheme.labelLarge!.copyWith(
-    fontSize: 64,
+    fontSize: 64.sp,
     fontWeight: FontWeight.w400,
   ),
   bodyLarge: baseTheme.textTheme.bodyLarge!.copyWith(
-    fontSize: 64,
+    fontSize: 64.sp,
     fontWeight: FontWeight.w400,
   ),
   bodyMedium: baseTheme.textTheme.bodyMedium!.copyWith(
-    fontSize: 48,
+    fontSize: 48.sp,
     fontWeight: FontWeight.w400,
   ),
   bodySmall: baseTheme.textTheme.bodySmall!.copyWith(
-    fontSize: 48,
+    fontSize: 48.sp,
     fontWeight: FontWeight.w700,
   ),
 );

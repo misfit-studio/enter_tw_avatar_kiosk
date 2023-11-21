@@ -5,6 +5,7 @@ import 'package:enter_bravo_kiosk/state/serial_provider.dart';
 import 'package:enter_bravo_kiosk/utils/serial_protocol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -53,7 +54,7 @@ class CalibrationScreen extends HookConsumerWidget {
               .commitCalibration();
 
           if (context.mounted) {
-            Navigator.of(context).popAndPushNamed('/questionnaire/generation');
+            context.go('/language');
           }
         }
       }
@@ -77,8 +78,8 @@ class CalibrationScreen extends HookConsumerWidget {
           children: [
             Center(
               child: Container(
-                width: 24,
-                height: 24,
+                width: 48.sp,
+                height: 48.sp,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(48),
@@ -91,13 +92,13 @@ class CalibrationScreen extends HookConsumerWidget {
                 child: ScaleTransition(
                   scale: tween.animate(animation),
                   child: Container(
-                    width: 2400,
-                    height: 2400,
+                    width: 2400.sp,
+                    height: 2400.sp,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(1920),
+                      borderRadius: BorderRadius.circular(1920.sp),
                       border: Border.all(
                         color: Colors.white,
-                        width: 24,
+                        width: 24.sp,
                       ),
                     ),
                   ),
@@ -109,7 +110,7 @@ class CalibrationScreen extends HookConsumerWidget {
               right: 0,
               left: 0,
               child: Padding(
-                padding: const EdgeInsets.all(96.0),
+                padding: EdgeInsets.all(96.sp),
                 child: TextCarousel(
                   strings: const [
                     "Zeige mit dem Gerät auf den Punkt und halte den Knopf gedrückt.",

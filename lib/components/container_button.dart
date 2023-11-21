@@ -1,6 +1,7 @@
 import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// A custom button widget for the Enter Bravo Kiosk application.
@@ -15,6 +16,7 @@ class EnterContainerButton extends HookConsumerWidget {
     this.highlightColor = EnterThemeColors.purple,
     this.borderColor,
     this.trailing,
+    this.expanded = false,
     this.reverse = false,
     this.child,
     this.onTap,
@@ -30,6 +32,8 @@ class EnterContainerButton extends HookConsumerWidget {
   final Color? borderColor;
   // A widget to display after the button's child.
   final Widget? trailing;
+  // Whether the button should be expanded to fill the available space.
+  final bool expanded;
   // The main widget displayed in the button.
   final Widget? child;
   // Whether the trailing widget's rotation effect should be reversed.
@@ -62,8 +66,8 @@ class EnterContainerButton extends HookConsumerWidget {
   Padding _buildContent(BuildContext context, bool isHovering) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: child != null ? 36.0 : 8.0,
-        vertical: 8.0,
+        horizontal: child != null ? 36.sp : 8.sp,
+        vertical: 8.sp,
       ),
       child: DefaultTextStyle.merge(
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -74,10 +78,13 @@ class EnterContainerButton extends HookConsumerWidget {
           children: [
             if (child != null)
               Padding(
-                padding: EdgeInsets.only(right: trailing != null ? 24.0 : 0),
+                padding: EdgeInsets.only(right: trailing != null ? 24.sp : 0),
                 child: child!,
               ),
-            if (trailing != null) _buildTrailing(isHovering),
+            if (trailing != null) ...[
+              if (expanded) const Spacer(),
+              _buildTrailing(isHovering),
+            ],
           ],
         ),
       ),
@@ -86,7 +93,7 @@ class EnterContainerButton extends HookConsumerWidget {
 
   Widget _buildTrailing(bool isHovering) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.sp),
       child: AnimatedRotation(
         duration: const Duration(milliseconds: 200),
         turns: (isHovering ? 0.125 : 0) * (reverse ? -1 : 1),
@@ -100,7 +107,7 @@ class EnterContainerButton extends HookConsumerWidget {
       left: 0,
       right: 0,
       bottom: 0,
-      top: isHovering ? 0 : 150,
+      top: isHovering ? 0 : 150.sp,
       duration: const Duration(milliseconds: 200),
       child: Container(
         color: highlightColor.withOpacity(0.25),
@@ -121,7 +128,7 @@ class EnterContainerButton extends HookConsumerWidget {
       onTap: onTap,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      borderRadius: const BorderRadius.all(Radius.circular(96.0)),
+      borderRadius: BorderRadius.all(Radius.circular(96.sp)),
       child: child,
     );
   }
@@ -129,10 +136,10 @@ class EnterContainerButton extends HookConsumerWidget {
   BoxDecoration _buildBoxDecoration() {
     return BoxDecoration(
       color: onTap == null ? backgroundColor.withOpacity(0.5) : backgroundColor,
-      borderRadius: const BorderRadius.all(Radius.circular(96.0)),
+      borderRadius: BorderRadius.circular(96.sp),
       border: Border.all(
         color: borderColor ?? Colors.transparent,
-        width: borderColor != null ? 5.0 : 0,
+        width: borderColor != null ? 5.sp : 0,
       ),
     );
   }
