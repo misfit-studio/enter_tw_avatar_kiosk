@@ -157,10 +157,10 @@ packages:
     dependency: transitive
     description:
       name: code_builder
-      sha256: "1be9be30396d7e4c0db42c35ea6ccd7cc6a1e19916b5dc64d6ac216b5544d677"
+      sha256: b2151ce26a06171005b379ecff6e08d34c470180ffe16b8e14b6d52be292b55f
       url: "https://pub.dev"
     source: hosted
-    version: "4.7.0"
+    version: "4.8.0"
   collection:
     dependency: transitive
     description:
@@ -197,26 +197,26 @@ packages:
     dependency: "direct dev"
     description:
       name: custom_lint
-      sha256: f9a828b696930cf8307f9a3617b2b65c9b370e484dc845d69100cadb77506778
+      sha256: "198ec6b8e084d22f508a76556c9afcfb71706ad3f42b083fe0ee923351a96d90"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.6"
+    version: "0.5.7"
   custom_lint_builder:
     dependency: transitive
     description:
       name: custom_lint_builder
-      sha256: c6f656a4d83385fc0656ae60410ed06bb382898c45627bfb8bbaa323aea97883
+      sha256: dfcfa987d2bd9d0ba751ef4bdef0f6c1aa0062f2a67fe716fd5f3f8b709d6418
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.6"
+    version: "0.5.7"
   custom_lint_core:
     dependency: transitive
     description:
       name: custom_lint_core
-      sha256: e20a67737adcf0cf2465e734dd624af535add11f9edd1f2d444909b5b0749650
+      sha256: f84c3fe2f27ef3b8831953e477e59d4a29c2952623f9eac450d7b40d9cdd94cc
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.6"
+    version: "0.5.7"
   dart_style:
     dependency: transitive
     description:
@@ -278,22 +278,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  flutter_reactive_ble:
-    dependency: "direct main"
-    description:
-      name: flutter_reactive_ble
-      sha256: "7a0d245412dc8e1b72ce2adc423808583b42ce824b1be74001ff22c8bb5ada48"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.0"
   flutter_riverpod:
     dependency: "direct main"
     description:
       name: flutter_riverpod
-      sha256: "305203d1578f6857675f9730568548b03900ce53afd319f4aa9d2fa943334dbe"
+      sha256: d261b0f2461e0595b96f92ed807841eb72cea84a6b12b8fd0c76e5ed803e7921
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.5"
+    version: "2.4.8"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -344,14 +336,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-  functional_data:
-    dependency: transitive
-    description:
-      name: functional_data
-      sha256: aefdec4365452283b2a7cf420a3169654d51d3e9553069a22d76680d7a9d7c3d
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   glob:
     dependency: transitive
     description:
@@ -380,10 +364,10 @@ packages:
     dependency: "direct main"
     description:
       name: hooks_riverpod
-      sha256: "2827136ecc0c2abffc3a58e575db6d5b84d159977fa1edc223c97bf566aa8c73"
+      sha256: b271e06606e718cf8185db9a792d1af00e2049e7bf5da09583654e020c00fbaa
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.5"
+    version: "2.4.8"
   hotreloader:
     dependency: transitive
     description:
@@ -536,46 +520,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  permission_handler:
-    dependency: "direct main"
-    description:
-      name: permission_handler
-      sha256: "284a66179cabdf942f838543e10413246f06424d960c92ba95c84439154fcac8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "11.0.1"
-  permission_handler_android:
-    dependency: transitive
-    description:
-      name: permission_handler_android
-      sha256: f9fddd3b46109bd69ff3f9efa5006d2d309b7aec0f3c1c5637a60a2d5659e76e
-      url: "https://pub.dev"
-    source: hosted
-    version: "11.1.0"
-  permission_handler_apple:
-    dependency: transitive
-    description:
-      name: permission_handler_apple
-      sha256: "99e220bce3f8877c78e4ace901082fb29fa1b4ebde529ad0932d8d664b34f3f5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.1.4"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      sha256: "6760eb5ef34589224771010805bea6054ad28453906936f843a8cc4d3a55c4a4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.12.0"
-  permission_handler_windows:
-    dependency: transitive
-    description:
-      name: permission_handler_windows
-      sha256: cc074aace208760f1eee6aa4fae766b45d947df85bc831cde77009cdb4720098
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.3"
   petitparser:
     dependency: transitive
     description:
@@ -584,14 +528,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.1"
-  plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: plugin_platform_interface
-      sha256: da3fdfeccc4d4ff2da8f8c556704c08f912542c5fb3cf2233ed75372384a034d
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.6"
   pool:
     dependency: transitive
     description:
@@ -600,14 +536,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  protobuf:
-    dependency: transitive
-    description:
-      name: protobuf
-      sha256: "01dd9bd0fa02548bf2ceee13545d4a0ec6046459d847b6b061d8a27237108a08"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   provider:
     dependency: "direct main"
     description:
@@ -639,62 +567,46 @@ packages:
       relative: true
     source: path
     version: "0.2.0"
-  reactive_ble_mobile:
-    dependency: transitive
-    description:
-      name: reactive_ble_mobile
-      sha256: e4623446d5fd6e641c984892ee1fa7c67499a2bb0971d85a500815e1d05db6fb
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.0"
-  reactive_ble_platform_interface:
-    dependency: transitive
-    description:
-      name: reactive_ble_platform_interface
-      sha256: "8988d16497886dccc69dca1c3eebce28ae387371f3f948a4f1b03dec9954fb05"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.0"
   riverpod:
     dependency: "direct main"
     description:
       name: riverpod
-      sha256: "2e84315036e64c59affaff7443dea51247bc2fe704461a32f26a27986fb63d55"
+      sha256: "08451ddbaad6eae73e2422d8109775885623340d721c6637b8719c9f4b478848"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.5"
+    version: "2.4.8"
   riverpod_analyzer_utils:
     dependency: transitive
     description:
       name: riverpod_analyzer_utils
-      sha256: "22a089135785f27e601075023f93c6622c43ef28c3ba1bef303cfbc314028e64"
+      sha256: d4dabc35358413bf4611fcb6abb46308a67c4ef4cd5e69fd3367b11925c59f57
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.3"
+    version: "0.5.0"
   riverpod_annotation:
     dependency: "direct main"
     description:
       name: riverpod_annotation
-      sha256: "9330309e4400f40e39a2a1d1c340e775d0fd23451cf2dd2286e03c7896fd2bd5"
+      sha256: "02c9bced96ed3ed8d9970820d1ce7b16600955bc01aa8b2276f09dd3d9d29ed9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.2"
   riverpod_generator:
     dependency: "direct dev"
     description:
       name: riverpod_generator
-      sha256: "0a1c8eeb3dba2ce704eb1a4c3b8043716d52bedaaaa5b2725e0bde67ca38a46e"
+      sha256: "94b6c49bba879729611d690d434796e3b4e7c72a27e88b482b92c505e90f90d9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.5"
+    version: "2.3.8"
   riverpod_lint:
     dependency: "direct dev"
     description:
       name: riverpod_lint
-      sha256: "97342543496f07c5172e0d1ce98c29499d8245776c94bfc837ceea5525c01ade"
+      sha256: "6fc64ae102ba39b0889b7aa7f4ef6c5a8f71a2ad215b90c787f319a9407a128b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.3"
+    version: "2.3.6"
   rxdart:
     dependency: transitive
     description:
@@ -844,14 +756,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
-  udp:
-    dependency: "direct main"
-    description:
-      name: udp
-      sha256: "50ea45d7ee80ad4c62de4ec0e8ed3ae65c36e9fe8cd0655a2bcd1503d2708e5a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.3"
   usb_serial:
     dependency: "direct main"
     description:
