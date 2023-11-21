@@ -66,7 +66,7 @@ class UsbSerialService {
 
   Future<void> write(Uint8List data) async {
     await _port?.write(data);
-    await _serialPortHandle?.write(data);
+    await _serialPortHandle?.writeBytes(data);
   }
 
   Future<void> _onUsbEvent(UsbEvent event) async {
