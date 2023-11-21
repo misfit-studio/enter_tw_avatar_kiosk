@@ -83,6 +83,7 @@ flutter:
     - assets/icons/
     - assets/spine/
     - assets/images/
+    - assets/libspine_flutter.so
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
