@@ -33,12 +33,13 @@ class UsbSerialService {
   Future<void> init() async {
     log.info("Initializing USB serial service");
 
-    if (Platform.isAndroid) UsbSerial.usbEventStream?.listen(_onUsbEvent);
-
-    // final device = await _findUsbDevice();
-    // if (device != null) {
-    //   await _connect(device);
-    // }
+    if (Platform.isAndroid) {
+      UsbSerial.usbEventStream?.listen(_onUsbEvent);
+      final device = await _findUsbDevice();
+      if (device != null) {
+        await _connect(device);
+      }
+    }
 
     if (Platform.isLinux) {
       /// get the list of available serial ports
@@ -148,6 +149,8 @@ class UsbSerialService {
     log.info("Disconnecting from device: $_device");
 
     await _port?.close();
+    await _serialPortHandle?.close();
+    _serialPortHandle = null;
     _port = null;
     _device = null;
 

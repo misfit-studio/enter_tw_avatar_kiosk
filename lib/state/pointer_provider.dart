@@ -30,8 +30,8 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
   Offset _delta = const Offset(0, 0);
   Offset _globalPosition = const Offset(0, 0);
 
-  double _xExtent = 5;
-  double _yExtent = 5 * 2.11;
+  double _xExtent = 10;
+  double _yExtent = 5 * 1.77;
 
   double _yaw = 0;
   double _pitch = 0;
