@@ -17,6 +17,8 @@ class UsbSerialService {
   UsbDevice? _device;
   UsbPort? _port;
 
+  SerialPortHandle? _serialPortHandle;
+
   final StreamController<Uint8List> _serialDataStreamController =
       StreamController<Uint8List>.broadcast();
 
@@ -47,9 +49,9 @@ class UsbSerialService {
       final port = ports.singleWhere((p) => p.name == 'ttyUSB0');
 
       /// open the port, so we can read and write things to it
-      final handle = port.open(baudrate: Baudrate.b9600);
+      _serialPortHandle = port.open(baudrate: Baudrate.b9600);
 
-      handle.stream.listen((data) {
+      _serialPortHandle?.stream.listen((data) {
         _serialDataStreamController.add(Uint8List.fromList(data));
       });
     }
@@ -64,6 +66,7 @@ class UsbSerialService {
 
   Future<void> write(Uint8List data) async {
     await _port?.write(data);
+    await _serialPortHandle?.write(data);
   }
 
   Future<void> _onUsbEvent(UsbEvent event) async {
