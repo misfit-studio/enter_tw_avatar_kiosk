@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:linux_serial/linux_serial.dart';
 import 'package:logging/logging.dart';
 import 'package:usb_serial/usb_serial.dart';
 import 'package:collection/collection.dart';
@@ -29,11 +31,27 @@ class UsbSerialService {
   Future<void> init() async {
     log.info("Initializing USB serial service");
 
-    UsbSerial.usbEventStream?.listen(_onUsbEvent);
+    if (Platform.isAndroid) UsbSerial.usbEventStream?.listen(_onUsbEvent);
 
-    final device = await _findUsbDevice();
-    if (device != null) {
-      await _connect(device);
+    // final device = await _findUsbDevice();
+    // if (device != null) {
+    //   await _connect(device);
+    // }
+
+    if (Platform.isLinux) {
+      /// get the list of available serial ports
+      final ports = SerialPorts.ports;
+      log.info(ports);
+
+      /// find the serial port with the name `ttyS0`
+      final port = ports.singleWhere((p) => p.name == 'ttyUSB0');
+
+      /// open the port, so we can read and write things to it
+      final handle = port.open(baudrate: Baudrate.b9600);
+
+      handle.stream.listen((data) {
+        _serialDataStreamController.add(Uint8List.fromList(data));
+      });
     }
   }
 
@@ -67,18 +85,20 @@ class UsbSerialService {
   }
 
   Future<UsbDevice?> _findUsbDevice() async {
-    List<UsbDevice> devices = await UsbSerial.listDevices();
-    log.fine("Devices: $devices");
+    if (Platform.isAndroid) {
+      List<UsbDevice> devices = await UsbSerial.listDevices();
+      log.fine("Devices: $devices");
 
-    final serialDevice = devices.firstWhereOrNull(
-        (device) => serialDeviceVendorIds.contains(device.vid));
-    if (serialDevice != null) {
-      log.info("Serial device found: $serialDevice");
-      return serialDevice;
-    } else if (devices.isNotEmpty) {
-      log.warning(
-          "Serial device not found, trying first device: ${devices.first}");
-      return devices.first;
+      final serialDevice = devices.firstWhereOrNull(
+          (device) => serialDeviceVendorIds.contains(device.vid));
+      if (serialDevice != null) {
+        log.info("Serial device found: $serialDevice");
+        return serialDevice;
+      } else if (devices.isNotEmpty) {
+        log.warning(
+            "Serial device not found, trying first device: ${devices.first}");
+        return devices.first;
+      }
     }
 
     return null;

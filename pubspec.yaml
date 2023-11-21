@@ -50,6 +50,7 @@ dependencies:
   usb_serial: ^0.5.1
   go_router: ^12.1.1
   flutter_screenutil: ^5.9.0
+  linux_serial: ^0.2.3+6
 
 dependency_overrides:
   raw_image_provider:
@@ -83,7 +84,6 @@ flutter:
     - assets/icons/
     - assets/spine/
     - assets/images/
-    - assets/libspine_flutter.so
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
