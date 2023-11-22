@@ -1,5 +1,5 @@
 import 'package:enter_bravo_kiosk/components/pointer.dart';
-import 'package:enter_bravo_kiosk/router.dart';
+import 'package:enter_bravo_kiosk/state/router_provider.dart';
 import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:enter_bravo_kiosk/utils/state_logger.dart';
 import 'package:enter_bravo_kiosk/utils/usb_serial.dart';
@@ -36,11 +36,12 @@ void main() async {
   ));
 }
 
-class EnterBravoApp extends StatelessWidget {
+class EnterBravoApp extends ConsumerWidget {
   const EnterBravoApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
     return ScreenUtilInit(
       designSize: const Size(1080, 1920),
       minTextAdapt: true,

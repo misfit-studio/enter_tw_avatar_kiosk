@@ -1,8 +1,5 @@
 import 'package:enter_bravo_kiosk/components/text_carousel.dart';
-import 'package:enter_bravo_kiosk/state/intl_provider.dart';
 import 'package:enter_bravo_kiosk/state/pointer_provider.dart';
-import 'package:enter_bravo_kiosk/state/serial_provider.dart';
-import 'package:enter_bravo_kiosk/utils/serial_protocol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,37 +7,40 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CalibrationScreen extends HookConsumerWidget {
-  const CalibrationScreen({super.key});
+  final String? from;
+
+  const CalibrationScreen({
+    super.key,
+    this.from,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final $s = ref.watch(intlStringsProvider);
-    final pointerState = ref.watch(pointerDeviceStateNotifierProvider);
-    final protocol = ref.watch(serialProtocolProvider);
-
+    final calibrationCompleted = useState(false);
     final animation = useAnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
     );
 
-    bool lastBtnAPressed = false;
-
     useEffect(() {
-      final subscription = protocol.eventStream.listen((event) {
-        if (event is PointerDeviceData &&
-            event.btnAPressed != lastBtnAPressed) {
-          lastBtnAPressed = event.btnAPressed;
-          if (event.btnAPressed) {
-            animation.reset();
-            animation.forward();
-            ref
-                .read(pointerDeviceStateNotifierProvider.notifier)
-                .startCalibration();
-          } else if (event.calibrationStatus == CalibrationStatus.calibrated) {
-            // Navigator.of(context)
-            //     .pushReplacementNamed('/questionnaire/generation');
-          } else if (pointerState == PointerState.calibrating) {
-            animation.reverse();
+      final subscription = ref
+          .read(pointerButtonStateNotifierProvider.notifier)
+          .eventStream
+          .listen((event) {
+        if (!calibrationCompleted.value) {
+          switch (event) {
+            case PointerButtonEvent.pressed:
+              animation.reset();
+              animation.forward();
+              ref
+                  .read(pointerDeviceStateNotifierProvider.notifier)
+                  .startCalibration();
+              break;
+            case PointerButtonEvent.released:
+              animation.reverse();
+              break;
           }
+        } else if (event == PointerButtonEvent.released) {
+          context.go(from ?? '/language');
         }
       });
       return subscription.cancel;
@@ -53,9 +53,7 @@ class CalibrationScreen extends HookConsumerWidget {
               .read(pointerDeviceStateNotifierProvider.notifier)
               .commitCalibration();
 
-          if (context.mounted) {
-            context.go('/language');
-          }
+          calibrationCompleted.value = true;
         }
       }
 
@@ -70,13 +68,12 @@ class CalibrationScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: GestureDetector(
-        onDoubleTap: () {
-          context.go('/language');
-        },
-        child: Stack(
-          children: [
-            Center(
+      body: Stack(
+        children: [
+          Center(
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 500),
+              opacity: calibrationCompleted.value ? 0 : 1,
               child: Container(
                 width: 48.sp,
                 height: 48.sp,
@@ -86,6 +83,8 @@ class CalibrationScreen extends HookConsumerWidget {
                 ),
               ),
             ),
+          ),
+          if (!calibrationCompleted.value)
             Center(
               child: UnconstrainedBox(
                 clipBehavior: Clip.hardEdge,
@@ -105,6 +104,32 @@ class CalibrationScreen extends HookConsumerWidget {
                 ),
               ),
             ),
+          if (!calibrationCompleted.value)
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: GestureDetector(
+                onDoubleTap: () {
+                  context.go(from ?? '/language');
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(96.sp),
+                  child: TextCarousel(
+                    strings: const [
+                      "Zeige mit dem Gerät auf den Punkt und halte den Knopf gedrückt.",
+                      "Point the device at the dot and hold the button.",
+                      "Pointe l'appareil vers le point et maintiens le bouton enfoncé.",
+                    ],
+                    transitionAlignment: Alignment.bottomLeft,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
+                ),
+              ),
+            ),
+          if (calibrationCompleted.value)
             Positioned(
               bottom: 0,
               right: 0,
@@ -113,9 +138,9 @@ class CalibrationScreen extends HookConsumerWidget {
                 padding: EdgeInsets.all(96.sp),
                 child: TextCarousel(
                   strings: const [
-                    "Zeige mit dem Gerät auf den Punkt und halte den Knopf gedrückt.",
-                    "Point the device at the dot and hold the button.",
-                    "Pointe l'appareil vers le point et maintiens le bouton enfoncé.",
+                    "Lasse den Knopf los, um fortzufahren.",
+                    "Release the button to continue.",
+                    "Relâche le bouton pour continuer.",
                   ],
                   transitionAlignment: Alignment.bottomLeft,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -124,8 +149,7 @@ class CalibrationScreen extends HookConsumerWidget {
                 ),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

@@ -11,6 +11,76 @@ part 'pointer_provider.g.dart';
 
 final log = Logger("PointerProvider");
 
+class PointerButtonState {
+  final bool btnA;
+  final bool btnB;
+
+  const PointerButtonState({
+    required this.btnA,
+    required this.btnB,
+  });
+
+  @override
+  String toString() => "PointerButtonState(btnA: $btnA, btnB: $btnB)";
+}
+
+enum PointerButtonEvent {
+  pressed,
+  released,
+}
+
+@Riverpod(keepAlive: true)
+class PointerButtonStateNotifier extends _$PointerButtonStateNotifier {
+  final StreamController<PointerButtonEvent> _eventController =
+      StreamController.broadcast();
+
+  bool _btnAState = false;
+  bool _btnBState = false;
+
+  void _listenToSerialProtocol() {
+    final protocol = ref.watch(serialProtocolProvider);
+
+    protocol.eventStream.listen((event) {
+      if (event is PointerDeviceData) _handleDeviceData(event);
+    });
+  }
+
+  void _handleDeviceData(PointerDeviceData data) {
+    final newBtnAState = data.btnAPressed;
+    final newBtnBState = data.btnBPressed;
+
+    bool stateChanged = false;
+
+    if (newBtnAState != _btnAState) {
+      stateChanged = true;
+      _btnAState = newBtnAState;
+      _eventController.add(newBtnAState
+          ? PointerButtonEvent.pressed
+          : PointerButtonEvent.released);
+    }
+
+    if (newBtnBState != _btnBState) {
+      stateChanged = true;
+      _btnBState = newBtnBState;
+      _eventController.add(newBtnBState
+          ? PointerButtonEvent.pressed
+          : PointerButtonEvent.released);
+    }
+
+    if (stateChanged) {
+      state = PointerButtonState(btnA: _btnAState, btnB: _btnBState);
+    }
+  }
+
+  @override
+  PointerButtonState build() {
+    _listenToSerialProtocol();
+    return PointerButtonState(btnA: _btnAState, btnB: _btnBState);
+  }
+
+  Stream<PointerButtonEvent> get eventStream => _eventController.stream;
+}
+
 enum PointerState {
   idle,
   calibrating,
@@ -66,7 +136,7 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
         if (_pointerExitTime == null) {
           _pointerExitTime = DateTime.now();
         } else if (DateTime.now().difference(_pointerExitTime!) >
-                const Duration(seconds: 5) &&
+                const Duration(seconds: 6) &&
             state == PointerState.active) {
           log.info("Lost Pointer");
           state = PointerState.calibrating;
@@ -100,6 +170,9 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
   void _handleStabilityChanged(StabilityStatus status) {
     if (status == StabilityStatus.inMotion && state == PointerState.idle) {
       state = PointerState.calibrating;
+    }
+    if (status == StabilityStatus.hanging) {
+      state = PointerState.idle;
     }
   }
 

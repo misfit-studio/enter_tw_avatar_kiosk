@@ -6,8 +6,25 @@ part of 'pointer_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$pointerButtonStateNotifierHash() =>
+    r'e075e70bc0de5b81a8c98c832fbb5e0f33cdc569';
+
+/// See also [PointerButtonStateNotifier].
+@ProviderFor(PointerButtonStateNotifier)
+final pointerButtonStateNotifierProvider =
+    NotifierProvider<PointerButtonStateNotifier, PointerButtonState>.internal(
+  PointerButtonStateNotifier.new,
+  name: r'pointerButtonStateNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$pointerButtonStateNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$PointerButtonStateNotifier = Notifier<PointerButtonState>;
 String _$pointerDeviceStateNotifierHash() =>
-    r'0f31c672bc270907479c2c71ea523fc5655136d3';
+    r'01a34b4230280d609ff8c8e8978e3663056c8ebb';
 
 /// See also [PointerDeviceStateNotifier].
 @ProviderFor(PointerDeviceStateNotifier)

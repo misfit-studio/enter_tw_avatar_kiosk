@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// A widget that renders the Pointer provided by the external pointing device.
 class Pointer extends ConsumerStatefulWidget {
@@ -21,6 +22,7 @@ class Pointer extends ConsumerStatefulWidget {
 
 class _PointerState extends ConsumerState<Pointer> {
   Offset _pointerPosition = const Offset(0, 0);
+  bool _pointerDown = false;
 
   @override
   void initState() {
@@ -30,9 +32,19 @@ class _PointerState extends ConsumerState<Pointer> {
     GestureBinding.instance.pointerRouter.addGlobalRoute((event) {
       // When the Pointer moves, normally, a PointerHoverEvent is dispatched.
       // TODO Check if we need to handle other events
-      if (event is PointerHoverEvent) {
+      if (event is PointerHoverEvent || event is PointerMoveEvent) {
         setState(() {
           _pointerPosition = event.position;
+        });
+      }
+      if (event is PointerDownEvent) {
+        setState(() {
+          _pointerDown = true;
+        });
+      }
+      if (event is PointerUpEvent) {
+        setState(() {
+          _pointerDown = false;
         });
       }
     });
@@ -49,6 +61,8 @@ class _PointerState extends ConsumerState<Pointer> {
   Widget build(BuildContext context) {
     final pointerState = ref.watch(pointerDeviceStateNotifierProvider);
 
+    final pointerSize = _pointerDown ? 40.sp : 48.sp;
+
     return Stack(
       children: [
         if (widget.child != null) widget.child!,
@@ -60,17 +74,18 @@ class _PointerState extends ConsumerState<Pointer> {
                 // movement
                 AnimatedPositioned(
                   duration: const Duration(milliseconds: 50),
-                  left: _pointerPosition.dx - 10,
-                  top: _pointerPosition.dy - 10,
-                  child: Container(
-                    width: 32,
-                    height: 32,
+                  left: _pointerPosition.dx - pointerSize / 2,
+                  top: _pointerPosition.dy - pointerSize / 2,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 100),
+                    width: pointerSize,
+                    height: pointerSize,
                     decoration: BoxDecoration(
                       color: Colors.black38,
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Colors.white,
-                        width: 2,
+                        width: _pointerDown ? 6.sp : 4.sp,
                       ),
                     ),
                   ),
