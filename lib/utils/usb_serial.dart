@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:linux_serial/linux_serial.dart';
 import 'package:logging/logging.dart';
 import 'package:usb_serial/usb_serial.dart';
 import 'package:collection/collection.dart';
@@ -12,8 +14,12 @@ class UsbSerialService {
 
   static final UsbSerialService _singleton = UsbSerialService._internal();
 
+  // Android Serial handles
   UsbDevice? _device;
   UsbPort? _port;
+
+  // Linux Serial handles
+  SerialPortHandle? _serialPortHandle;
 
   final StreamController<Uint8List> _serialDataStreamController =
       StreamController<Uint8List>.broadcast();
@@ -29,11 +35,16 @@ class UsbSerialService {
   Future<void> init() async {
     log.info("Initializing USB serial service");
 
-    UsbSerial.usbEventStream?.listen(_onUsbEvent);
+    if (Platform.isAndroid) {
+      UsbSerial.usbEventStream?.listen(_onAndroidUsbEvent);
+      final device = await _findUsbDevice();
+      if (device != null) {
+        await _connectAndroid(device);
+      }
+    }
 
-    final device = await _findUsbDevice();
-    if (device != null) {
-      await _connect(device);
+    if (Platform.isLinux) {
+      _connectLinux();
     }
   }
 
@@ -46,15 +57,16 @@ class UsbSerialService {
 
   Future<void> write(Uint8List data) async {
     await _port?.write(data);
+    await _serialPortHandle?.writeBytes(data);
   }
 
-  Future<void> _onUsbEvent(UsbEvent event) async {
+  Future<void> _onAndroidUsbEvent(UsbEvent event) async {
     switch (event.event) {
       case UsbEvent.ACTION_USB_ATTACHED:
         log.info("USB device attached: ${event.device}");
         if (event.device != null) {
           if (_device != null) await _disconnect();
-          await _connect(event.device!);
+          await _connectAndroid(event.device!);
         }
         break;
       case UsbEvent.ACTION_USB_DETACHED:
@@ -67,24 +79,26 @@ class UsbSerialService {
   }
 
   Future<UsbDevice?> _findUsbDevice() async {
-    List<UsbDevice> devices = await UsbSerial.listDevices();
-    log.fine("Devices: $devices");
+    if (Platform.isAndroid) {
+      List<UsbDevice> devices = await UsbSerial.listDevices();
+      log.fine("Devices: $devices");
 
-    final serialDevice = devices.firstWhereOrNull(
-        (device) => serialDeviceVendorIds.contains(device.vid));
-    if (serialDevice != null) {
-      log.info("Serial device found: $serialDevice");
-      return serialDevice;
-    } else if (devices.isNotEmpty) {
-      log.warning(
-          "Serial device not found, trying first device: ${devices.first}");
-      return devices.first;
+      final serialDevice = devices.firstWhereOrNull(
+          (device) => serialDeviceVendorIds.contains(device.vid));
+      if (serialDevice != null) {
+        log.info("Serial device found: $serialDevice");
+        return serialDevice;
+      } else if (devices.isNotEmpty) {
+        log.warning(
+            "Serial device not found, trying first device: ${devices.first}");
+        return devices.first;
+      }
     }
 
     return null;
   }
 
-  Future<bool> _connect(UsbDevice device) async {
+  Future<bool> _connectAndroid(UsbDevice device) async {
     log.info("Connecting to device: $device");
     _device = device;
 
@@ -121,10 +135,33 @@ class UsbSerialService {
     return true;
   }
 
+  Future<void> _connectLinux() async {
+    /// get the list of available serial ports
+    final ports = SerialPorts.ports;
+    log.info("Available serial ports:");
+    log.info(ports);
+
+    /// find the serial port with the name `ttyS0`
+    try {
+      final port = ports.singleWhere((p) => p.name == 'ttyUSB0');
+
+      /// open the port, so we can read and write things to it
+      _serialPortHandle = port.open(baudrate: Baudrate.b9600);
+
+      _serialPortHandle?.stream.listen((data) {
+        _serialDataStreamController.add(Uint8List.fromList(data));
+      });
+    } catch (e) {
+      log.severe("Failed to connect to serial device", e);
+    }
+  }
+
   Future<void> _disconnect() async {
     log.info("Disconnecting from device: $_device");
 
     await _port?.close();
+    await _serialPortHandle?.close();
+    _serialPortHandle = null;
     _port = null;
     _device = null;
 
