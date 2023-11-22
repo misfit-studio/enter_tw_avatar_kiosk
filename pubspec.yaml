@@ -85,6 +85,10 @@ flutter:
     - assets/icons/
     - assets/spine/
     - assets/images/
+    - assets/images/assessment/
+    - assets/images/broadness/
+    - assets/images/interest_type/
+    - assets/images/reliance/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

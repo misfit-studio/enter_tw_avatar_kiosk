@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:enter_bravo_kiosk/components/continuous_animated_rotation.dart';
 import 'package:enter_bravo_kiosk/models/avatar.dart';
+import 'package:enter_bravo_kiosk/models/questionnaire.dart';
 import 'package:enter_bravo_kiosk/state/intl_provider.dart';
 import 'package:enter_bravo_kiosk/state/questionnaire_provider.dart';
 import 'package:enter_bravo_kiosk/theme/theme.dart';
@@ -34,18 +37,22 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   spine.SpineWidgetController? _spineController;
 
   final int _currentAnimation = 1;
-  static const animations = [
+  final _random = Random();
+  static const animationsHappy = [
     "COOL POSE",
     "Dance:WAVE",
     "HAPPY WALK",
-    "Jump",
+    "TWIST DANCE",
+    "WIGGLE"
+  ];
+  static const animationsNeutral = [
     "NORMAL WALK",
+    "WAVE HELLO",
+    "Jump",
+  ];
+  static const animationsShy = [
     "SHY IDLE",
     "SLOW WALK",
-    "STATIC",
-    "TWIST DANCE",
-    "WAVE HELLO",
-    "WIGGLE"
   ];
 
   @override
@@ -78,8 +85,17 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         final avatar = Avatar.fromQuestionnaire(questionnaire);
         _avatar?.applyAvatar(avatar);
 
+        String animationName = switch (questionnaire.assessment) {
+          Assessment.averted =>
+            animationsShy[_random.nextInt(animationsShy.length)],
+          Assessment.neutral =>
+            animationsNeutral[_random.nextInt(animationsNeutral.length)],
+          Assessment.interested =>
+            animationsHappy[_random.nextInt(animationsHappy.length)],
+          _ => "WAVE HELLO"
+        };
         _spineController?.animationState
-            .setAnimationByName(0, animations[_currentAnimation], true);
+            .setAnimationByName(0, animationName, true);
       },
     );
 
@@ -217,12 +233,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
 
     final questionnaire = ref.watch(questionnaireStateProvider);
     final techType =
-        "${$s[questionnaire.interestType?.name]}-Tech-${$s[questionnaire.techType.name]}";
+        $s["${questionnaire.interestType?.name}_${questionnaire.techType.name}"] ??
+            '';
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
-        onTap: () => context.go('/'),
+        onTap: () {
+          if (_introController.isCompleted) context.go('/');
+        },
         child: Stack(
           children: [
             _buildIconSpinBackground(),
@@ -240,7 +259,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Dein Technik-Typ',
+                            $s['result_title'] ?? '',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall
