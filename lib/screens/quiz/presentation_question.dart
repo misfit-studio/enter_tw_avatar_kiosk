@@ -57,8 +57,8 @@ class PresentationQuestion extends HookConsumerWidget {
                 children: [
                   SvgPicture.asset('assets/images/presentation_bg.svg'),
                   AnimatedPositioned(
-                    top: phonePosition.dy,
-                    left: phonePosition.dx,
+                    top: phonePosition.dy.sp,
+                    left: phonePosition.dx.sp,
                     duration: const Duration(milliseconds: 500),
                     child: WiggleNoiseDevice(
                       image: 'assets/images/reliance/reliance_01.png',
