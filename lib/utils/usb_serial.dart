@@ -14,9 +14,11 @@ class UsbSerialService {
 
   static final UsbSerialService _singleton = UsbSerialService._internal();
 
+  // Android Serial handles
   UsbDevice? _device;
   UsbPort? _port;
 
+  // Linux Serial handles
   SerialPortHandle? _serialPortHandle;
 
   final StreamController<Uint8List> _serialDataStreamController =
@@ -34,27 +36,15 @@ class UsbSerialService {
     log.info("Initializing USB serial service");
 
     if (Platform.isAndroid) {
-      UsbSerial.usbEventStream?.listen(_onUsbEvent);
+      UsbSerial.usbEventStream?.listen(_onAndroidUsbEvent);
       final device = await _findUsbDevice();
       if (device != null) {
-        await _connect(device);
+        await _connectAndroid(device);
       }
     }
 
     if (Platform.isLinux) {
-      /// get the list of available serial ports
-      final ports = SerialPorts.ports;
-      log.info(ports);
-
-      /// find the serial port with the name `ttyS0`
-      final port = ports.singleWhere((p) => p.name == 'ttyUSB0');
-
-      /// open the port, so we can read and write things to it
-      _serialPortHandle = port.open(baudrate: Baudrate.b9600);
-
-      _serialPortHandle?.stream.listen((data) {
-        _serialDataStreamController.add(Uint8List.fromList(data));
-      });
+      _connectLinux();
     }
   }
 
@@ -70,13 +60,13 @@ class UsbSerialService {
     await _serialPortHandle?.writeBytes(data);
   }
 
-  Future<void> _onUsbEvent(UsbEvent event) async {
+  Future<void> _onAndroidUsbEvent(UsbEvent event) async {
     switch (event.event) {
       case UsbEvent.ACTION_USB_ATTACHED:
         log.info("USB device attached: ${event.device}");
         if (event.device != null) {
           if (_device != null) await _disconnect();
-          await _connect(event.device!);
+          await _connectAndroid(event.device!);
         }
         break;
       case UsbEvent.ACTION_USB_DETACHED:
@@ -108,7 +98,7 @@ class UsbSerialService {
     return null;
   }
 
-  Future<bool> _connect(UsbDevice device) async {
+  Future<bool> _connectAndroid(UsbDevice device) async {
     log.info("Connecting to device: $device");
     _device = device;
 
@@ -143,6 +133,27 @@ class UsbSerialService {
     });
 
     return true;
+  }
+
+  Future<void> _connectLinux() async {
+    /// get the list of available serial ports
+    final ports = SerialPorts.ports;
+    log.info("Available serial ports:");
+    log.info(ports);
+
+    /// find the serial port with the name `ttyS0`
+    try {
+      final port = ports.singleWhere((p) => p.name == 'ttyUSB0');
+
+      /// open the port, so we can read and write things to it
+      _serialPortHandle = port.open(baudrate: Baudrate.b9600);
+
+      _serialPortHandle?.stream.listen((data) {
+        _serialDataStreamController.add(Uint8List.fromList(data));
+      });
+    } catch (e) {
+      log.severe("Failed to connect to serial device", e);
+    }
   }
 
   Future<void> _disconnect() async {
