@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:enter_bravo_kiosk/components/text_carousel.dart';
 import 'package:enter_bravo_kiosk/state/pointer_provider.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,9 @@ class CalibrationScreen extends HookConsumerWidget {
               .commitCalibration();
 
           calibrationCompleted.value = true;
+          Timer(const Duration(seconds: 5), () {
+            calibrationCompleted.value = false;
+          });
         }
       }
 
