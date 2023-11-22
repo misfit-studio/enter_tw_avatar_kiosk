@@ -86,6 +86,7 @@ flutter:
     - assets/spine/
     - assets/images/
     - assets/images/assessment/
+    - assets/images/generation/
     - assets/images/broadness/
     - assets/images/interest_type/
     - assets/images/reliance/

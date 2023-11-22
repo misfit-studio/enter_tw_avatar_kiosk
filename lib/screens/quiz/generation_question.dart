@@ -21,17 +21,78 @@ class GenerationQuestion extends ConsumerStatefulWidget {
 
 class _GenerationQuestionState extends ConsumerState<GenerationQuestion> {
   final _boxes = <ChooserBox<int>>[
-    ChooserBox(image: '', value: 1960, width: 432, height: 432),
-    ChooserBox(image: '', value: 1984, width: 432, height: 204, x: 456),
-    ChooserBox(image: '', value: 1979, width: 204, height: 204, x: 456, y: 228),
-    ChooserBox(image: '', value: 2004, width: 204, height: 204, x: 684, y: 228),
-    ChooserBox(image: '', value: 2000, width: 204, height: 432, y: 456),
-    ChooserBox(image: '', value: 1923, width: 432, height: 432, x: 228, y: 456),
-    ChooserBox(image: '', value: 1981, width: 204, height: 204, x: 684, y: 456),
-    ChooserBox(image: '', value: 1984, width: 204, height: 432, x: 684, y: 684),
-    ChooserBox(image: '', value: 1984, width: 204, height: 204, y: 912),
-    ChooserBox(image: '', value: 1984, width: 204, height: 204, x: 228, y: 912),
-    ChooserBox(image: '', value: 1984, width: 204, height: 204, x: 456, y: 912),
+    ChooserBox(
+        image: 'assets/images/generation/generation_07.png',
+        value: 1984,
+        width: 432,
+        height: 432),
+    ChooserBox(
+        image: 'assets/images/generation/generation_02.png',
+        value: 1965,
+        width: 432,
+        height: 204,
+        x: 456),
+    ChooserBox(
+        image: 'assets/images/generation/generation_03.png',
+        value: 2005,
+        width: 204,
+        height: 204,
+        x: 456,
+        y: 228),
+    ChooserBox(
+        image: 'assets/images/generation/generation_04.png',
+        value: 1990,
+        width: 204,
+        height: 204,
+        x: 684,
+        y: 228),
+    ChooserBox(
+        image: 'assets/images/generation/generation_01.png',
+        value: 2020,
+        width: 204,
+        height: 432,
+        y: 456),
+    ChooserBox(
+        image: 'assets/images/generation/generation_06.png',
+        value: 1950,
+        width: 432,
+        height: 432,
+        x: 228,
+        y: 456),
+    ChooserBox(
+        image: 'assets/images/generation/generation_05.png',
+        value: 1990,
+        width: 204,
+        height: 204,
+        x: 684,
+        y: 456),
+    ChooserBox(
+        image: 'assets/images/generation/generation_08.png',
+        value: 1980,
+        width: 204,
+        height: 432,
+        x: 684,
+        y: 684),
+    ChooserBox(
+        image: 'assets/images/generation/generation_09.png',
+        value: 2020,
+        width: 204,
+        height: 204,
+        y: 912),
+    ChooserBox(
+        image: 'assets/images/generation/generation_10.png',
+        value: 2000,
+        width: 204,
+        height: 204,
+        x: 228,
+        y: 912),
+    ChooserBox(
+        image: 'assets/images/generation/generation_11.png',
+        value: 1985,
+        width: 204,
+        height: 204,
+        x: 456,
+        y: 912),
   ];
 
   @override
@@ -84,6 +145,7 @@ class _GenerationQuestionState extends ConsumerState<GenerationQuestion> {
                     height: box.height.h,
                     child: ImageChooserBox(
                       selected: box.selected,
+                      imagePath: box.image,
                       onTap: () {
                         box.selected = !box.selected;
                         setState(() {});
