@@ -79,7 +79,7 @@ class PresentationQuestion extends HookConsumerWidget {
                               ? Colors.black
                               : null,
                       child: Text(
-                        $s[''] ?? 'AUSGESCHALTET',
+                        $s['question_presentation_label_off'] ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -96,15 +96,15 @@ class PresentationQuestion extends HookConsumerWidget {
                           ? Colors.black
                           : null,
                       child: Text(
-                        $s[''] ?? 'NEBENZIMMER',
+                        $s['question_presentation_label_otherroom'] ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 710.sp,
-                    left: 190.sp,
-                    width: 280.sp,
+                    top: 715.sp,
+                    left: 170.sp,
+                    width: 320.sp,
                     child: EnterContainerButton(
                       onTap: () {
                         selectedPresentation.value = Presenation.high;
@@ -114,7 +114,7 @@ class PresentationQuestion extends HookConsumerWidget {
                               ? Colors.black
                               : null,
                       child: Text(
-                        $s[''] ?? 'BEI MIR',
+                        $s['question_presentation_label_withme'] ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -132,7 +132,7 @@ class PresentationQuestion extends HookConsumerWidget {
                               ? Colors.black
                               : null,
                       child: Text(
-                        $s[''] ?? 'GLEICHER RAUM',
+                        $s['question_presentation_label_sameroom'] ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),

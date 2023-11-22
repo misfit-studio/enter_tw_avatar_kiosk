@@ -119,13 +119,6 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         _loopController.forward();
       }
     });
-    _loopController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _loopController.reset();
-        _introController.reset();
-        _introController.forward();
-      }
-    });
 
     _iconSizeTween = Tween<double>(begin: 128, end: 1500).animate(
       CurvedAnimation(
@@ -243,6 +236,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
           if (_introController.isCompleted) context.go('/');
         },
         child: Stack(
+          clipBehavior: Clip.none,
           children: [
             _buildIconSpinBackground(),
             _buildAvatarBacklight(),

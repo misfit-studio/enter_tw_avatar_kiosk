@@ -24,14 +24,50 @@ class AssessmentQuestion extends StatefulHookConsumerWidget {
 class _AssessmentQuestionState extends ConsumerState<AssessmentQuestion> {
   final _boxes = <ChooserBox<Assessment>>[
     ChooserBox(
+      value: Assessment.interested,
+      width: 580,
+      height: 160,
+      x: 300,
+      angle: 10,
+      image: 'question_assessment_img_noti',
+    ),
+    ChooserBox(
+      value: Assessment.averted,
+      width: 500,
+      height: 500,
+      x: -50,
+      y: 150,
+      angle: -10,
+      image: 'question_assessment_img_sticky',
+    ),
+    ChooserBox(
+      value: Assessment.neutral,
+      width: 550,
+      height: 500,
+      x: 380,
+      y: 180,
+      angle: 20,
+      image: 'question_assessment_img_paper',
+    ),
+    ChooserBox(
+      value: Assessment.interested,
+      width: 400,
+      height: 200,
+      x: 00,
+      y: 650,
+      angle: -10,
+      image: 'question_assessment_img_message',
+    ),
+    ChooserBox(
       value: Assessment.averted,
       width: 580,
       height: 297,
-      angle: 0,
-      image: 'assets/images/assessment_tweet_de.png',
+      x: 300,
+      y: 850,
+      angle: -5,
+      image: 'question_assessment_img_tweet',
     ),
   ];
-
   @override
   Widget build(BuildContext context) {
     final lang = ref.watch(selectedLanguageProvider);
@@ -62,6 +98,7 @@ class _AssessmentQuestionState extends ConsumerState<AssessmentQuestion> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 96.sp),
               child: Stack(
+                clipBehavior: Clip.none,
                 children: List.generate(_boxes.length, (index) {
                   final box = _boxes[index];
                   return Positioned(
@@ -70,10 +107,10 @@ class _AssessmentQuestionState extends ConsumerState<AssessmentQuestion> {
                     width: box.width.w,
                     height: box.height.h,
                     child: Transform.rotate(
-                      angle: box.angle * (180 / pi),
+                      angle: box.angle * (pi / 360),
                       child: StickerChooserBox(
                         selected: box.selected,
-                        image: box.image,
+                        image: $s[box.image] ?? '',
                         onTap: () {
                           // Deselect others
                           for (final box in _boxes) {

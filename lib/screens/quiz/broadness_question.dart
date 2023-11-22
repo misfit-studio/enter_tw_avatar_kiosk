@@ -26,28 +26,28 @@ class _BroadnessQuestionState extends ConsumerState<BroadnessQuestion> {
       value: null,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_01.png',
     ),
     ChooserBox(
       value: null,
       x: 312,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_02.png',
     ),
     ChooserBox(
       value: null,
       x: 624,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_03.png',
     ),
     ChooserBox(
       value: null,
       y: 312,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_04.png',
     ),
     ChooserBox(
       value: null,
@@ -55,7 +55,7 @@ class _BroadnessQuestionState extends ConsumerState<BroadnessQuestion> {
       y: 312,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_05.png',
     ),
     ChooserBox(
       value: null,
@@ -63,14 +63,14 @@ class _BroadnessQuestionState extends ConsumerState<BroadnessQuestion> {
       y: 312,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_06.png',
     ),
     ChooserBox(
       value: null,
       y: 624,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_07.png',
     ),
     ChooserBox(
       value: null,
@@ -78,7 +78,7 @@ class _BroadnessQuestionState extends ConsumerState<BroadnessQuestion> {
       y: 624,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_08.png',
     ),
     ChooserBox(
       value: null,
@@ -86,7 +86,7 @@ class _BroadnessQuestionState extends ConsumerState<BroadnessQuestion> {
       y: 624,
       width: 264,
       height: 264,
-      image: 'assets/images/broadness_01.png',
+      image: 'assets/images/broadness/broadness_09.png',
     ),
   ];
 

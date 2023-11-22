@@ -24,20 +24,82 @@ class InterestTypeQuestion extends StatefulHookConsumerWidget {
 class _InterestTypeQuestionState extends ConsumerState<InterestTypeQuestion> {
   final _boxes = <ChooserBox<InterestType>>[
     ChooserBox(
-      value: InterestType.play,
+      value: InterestType.creativity,
       width: 300,
       height: 300,
       angle: 0,
-      image: 'assets/images/interest_type_gaming_2.png',
+      image: 'assets/images/interest_type/interest_type_creative_1.png',
+    ),
+    ChooserBox(
+      value: InterestType.creativity,
+      width: 300,
+      height: 300,
+      x: 600,
+      y: 400,
+      angle: 0,
+      image: 'assets/images/interest_type/interest_type_creative_2.png',
+    ),
+    ChooserBox(
+      value: InterestType.creativity,
+      width: 400,
+      height: 300,
+      x: 450,
+      angle: 12,
+      image: 'assets/images/interest_type/interest_type_creative_3.png',
     ),
     ChooserBox(
       value: InterestType.play,
       width: 300,
       height: 300,
-      x: 300,
-      y: 300,
+      x: 000,
+      y: 380,
+      angle: 15,
+      image: 'assets/images/interest_type/interest_type_gaming_1.png',
+    ),
+    ChooserBox(
+      value: InterestType.play,
+      width: 300,
+      height: 300,
+      x: 280,
+      y: 250,
       angle: 0,
-      image: 'assets/images/interest_type_gaming_2.png',
+      image: 'assets/images/interest_type/interest_type_gaming_2.png',
+    ),
+    ChooserBox(
+      value: InterestType.play,
+      width: 300,
+      height: 300,
+      x: 400,
+      y: 850,
+      angle: 20,
+      image: 'assets/images/interest_type/interest_type_gaming_3.png',
+    ),
+    ChooserBox(
+      value: InterestType.utility,
+      width: 300,
+      height: 300,
+      x: 650,
+      y: 750,
+      angle: 0,
+      image: 'assets/images/interest_type/interest_type_utility_1.png',
+    ),
+    ChooserBox(
+      value: InterestType.utility,
+      width: 250,
+      height: 250,
+      x: 300,
+      y: 600,
+      angle: 0,
+      image: 'assets/images/interest_type/interest_type_utility_2.png',
+    ),
+    ChooserBox(
+      value: InterestType.utility,
+      width: 350,
+      height: 300,
+      x: 0,
+      y: 800,
+      angle: -10,
+      image: 'assets/images/interest_type/interest_type_utility_3.png',
     ),
   ];
 
@@ -70,6 +132,7 @@ class _InterestTypeQuestionState extends ConsumerState<InterestTypeQuestion> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 96.sp),
               child: Stack(
+                clipBehavior: Clip.none,
                 children: List.generate(_boxes.length, (index) {
                   final box = _boxes[index];
                   return Positioned(
@@ -78,7 +141,7 @@ class _InterestTypeQuestionState extends ConsumerState<InterestTypeQuestion> {
                     width: box.width.w,
                     height: box.height.h,
                     child: Transform.rotate(
-                      angle: box.angle * (180 / pi),
+                      angle: box.angle * (pi / 360),
                       child: StickerChooserBox(
                         selected: box.selected,
                         image: box.image,

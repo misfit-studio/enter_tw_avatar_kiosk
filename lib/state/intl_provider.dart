@@ -10,10 +10,24 @@ enum Language {
 
 const Map<String, String> _stringsDe = {
   'question_assessment_title': 'Welche Gefühle wecken wir in dir?',
+  'question_assessment_img_message':
+      'assets/images/assessment/assessment_message_de.png',
+  'question_assessment_img_noti':
+      'assets/images/assessment/assessment_noti_de.png',
+  'question_assessment_img_paper':
+      'assets/images/assessment/assessment_paper_de.png',
+  'question_assessment_img_sticky':
+      'assets/images/assessment/assessment_sticky_de.png',
+  'question_assessment_img_tweet':
+      'assets/images/assessment/assessment_tweet_de.png',
   'question_broadness_title': 'Was kommt in unser Fotoalbum?',
   'question_generation_title': 'An wen von uns erinnerst du dich?',
   'question_interest_type_title': 'Mit wem verbringst du am liebsten Zeit?',
   'question_presentation_title': 'Wo bin ich, wenn du Gäste hast?',
+  'question_presentation_label_off': 'AUSGESCHALTET',
+  'question_presentation_label_otherroom': 'NEBENZIMMER',
+  'question_presentation_label_sameroom': 'GLEICHER RAUM',
+  'question_presentation_label_withme': 'BEI MIR',
   'question_proficiency_title': 'Durch wen kennst du uns?',
   'question_proficiency_label_me': 'ICH',
   'question_proficiency_label_family': 'FAMILIE',
@@ -46,10 +60,24 @@ const Map<String, String> _stringsDe = {
 
 const Map<String, String> _stringsEn = {
   'question_assessment_title': 'What feelings do we evoke in you?',
+  'question_assessment_img_message':
+      'assets/images/assessment/assessment_message_en.png',
+  'question_assessment_img_noti':
+      'assets/images/assessment/assessment_noti_en.png',
+  'question_assessment_img_paper':
+      'assets/images/assessment/assessment_paper_en.png',
+  'question_assessment_img_sticky':
+      'assets/images/assessment/assessment_sticky_en.png',
+  'question_assessment_img_tweet':
+      'assets/images/assessment/assessment_tweet_en.png',
   'question_broadness_title': 'What goes into our photo album?',
   'question_generation_title': 'Who of us do you remember?',
   'question_interest_type_title': 'Who do you prefer to spend time with?',
   'question_presentation_title': 'Where am I when you have guests?',
+  'question_presentation_label_off': 'TURNED OFF',
+  'question_presentation_label_otherroom': 'OTHER ROOM',
+  'question_presentation_label_sameroom': 'SAME ROOM',
+  'question_presentation_label_withme': 'WITH ME',
   'question_proficiency_title': 'Who do you know us through?',
   'question_proficiency_label_me': 'ME',
   'question_proficiency_label_family': 'FAMILY',
@@ -82,10 +110,24 @@ const Map<String, String> _stringsEn = {
 
 const Map<String, String> _stringsFr = {
   'question_assessment_title': 'Quels sentiments on te fait ressentir?',
+  'question_assessment_img_message':
+      'assets/images/assessment/assessment_message_fr.png',
+  'question_assessment_img_noti':
+      'assets/images/assessment/assessment_noti_fr.png',
+  'question_assessment_img_paper':
+      'assets/images/assessment/assessment_paper_fr.png',
+  'question_assessment_img_sticky':
+      'assets/images/assessment/assessment_sticky_fr.png',
+  'question_assessment_img_tweet':
+      'assets/images/assessment/assessment_tweet_fr.png',
   'question_broadness_title': "Qu'on met dans notre album photo?",
   'question_generation_title': 'Tu te souviens de qui parmi nous?',
   'question_interest_type_title': 'Avec qui tu préfères passer du temps?',
   'question_presentation_title': 'Je suis où quand tu as des invités?',
+  'question_presentation_label_off': 'ÉTEINT',
+  'question_presentation_label_otherroom': 'AUTRE PIÈCE',
+  'question_presentation_label_sameroom': 'MÊME PIÈCE',
+  'question_presentation_label_withme': 'AVEC MOI',
   'question_proficiency_title': 'Tu nous connais par qui?',
   'question_proficiency_label_me': 'MOI',
   'question_proficiency_label_family': 'FAMILLE',

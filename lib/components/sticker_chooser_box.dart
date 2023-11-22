@@ -15,6 +15,10 @@ class StickerChooserBox extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final animation = useAnimationController(
+      duration: const Duration(milliseconds: 150),
+    )..repeat(reverse: true);
+
     final hovering = useState(false);
     return InkWell(
       onTap: onTap,
@@ -29,7 +33,14 @@ class StickerChooserBox extends HookWidget {
             : hovering.value
                 ? 1.1
                 : 1,
-        child: Image.asset(image),
+        child: AnimatedBuilder(
+            animation: animation,
+            builder: (context, child) {
+              return Transform.rotate(
+                angle: selected ? animation.value * 0.05 : 0,
+                child: Image.asset(image),
+              );
+            }),
       ),
     );
   }
