@@ -1,9 +1,7 @@
-import 'dart:async';
-import 'dart:math';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:enter_bravo_kiosk/components/continuous_animated_rotation.dart';
 import 'package:enter_bravo_kiosk/models/avatar.dart';
-import 'package:enter_bravo_kiosk/models/questionnaire.dart';
+import 'package:enter_bravo_kiosk/state/intl_provider.dart';
 import 'package:enter_bravo_kiosk/state/questionnaire_provider.dart';
 import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:enter_bravo_kiosk/utils/enter_avatar.dart';
@@ -32,15 +30,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   late Animation<double> _avatarBacklightOpacityTween;
   late Animation<double> _avatarOpacityTween;
 
-  Timer? _timer;
-  Timer? _randomizeTimer;
   EnterAvatar? _avatar;
   spine.SpineWidgetController? _spineController;
 
-  List<Questionnaire> _allQs = [];
-  final _random = Random();
-
-  int _currentAnimation = 10;
+  final int _currentAnimation = 1;
   static const animations = [
     "COOL POSE",
     "Dance:WAVE",
@@ -59,6 +52,41 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   void initState() {
     super.initState();
 
+    _load();
+    _initAnimations();
+  }
+
+  @override
+  void dispose() {
+    _introController.dispose();
+    _loopController.dispose();
+
+    super.dispose();
+  }
+
+  void _load() async {
+    _avatar = await EnterAvatar.loadFromAsset(
+      "assets/spine/enter_avatar.atlas",
+      "assets/spine/enter_avatar.json",
+    );
+
+    _spineController = spine.SpineWidgetController(
+      onInitialized: (controller) {
+        _avatar?.initSkeleton();
+
+        final questionnaire = ref.read(questionnaireStateProvider);
+        final avatar = Avatar.fromQuestionnaire(questionnaire);
+        _avatar?.applyAvatar(avatar);
+
+        _spineController?.animationState
+            .setAnimationByName(0, animations[_currentAnimation], true);
+      },
+    );
+
+    setState(() {});
+  }
+
+  void _initAnimations() {
     _introController = AnimationController(
       duration: const Duration(seconds: 5),
       vsync: this,
@@ -72,7 +100,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     _introController.forward();
     _introController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _loopController.repeat();
+        _loopController.forward();
+      }
+    });
+    _loopController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _loopController.reset();
+        _introController.reset();
+        _introController.forward();
       }
     });
 
@@ -168,73 +203,21 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         curve: Curves.ease,
       ),
     ));
-
-    _load();
-
-    // _timer = Timer(const Duration(seconds: 3), () {
-    //   Navigator.of(context).popUntil((route) => route.isFirst);
-    // });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    _randomizeTimer?.cancel();
-
-    _introController.dispose();
-    _loopController.dispose();
-
-    super.dispose();
-  }
-
-  void _load() async {
-    _avatar = await EnterAvatar.loadFromAsset(
-      "assets/spine/enter_avatar.atlas",
-      "assets/spine/enter_avatar.json",
-    );
-
-    _spineController = spine.SpineWidgetController(
-      onInitialized: (controller) {
-        _avatar?.initSkeleton();
-
-        final avatar = Avatar.fromQuestionnaire(
-          ref.read(questionnaireStateProvider),
-        );
-        _avatar?.applyAvatar(avatar);
-
-        _spineController?.animationState
-            .setAnimationByName(0, animations[_currentAnimation], true);
-      },
-    );
-
-    setState(() {});
-  }
-
-  void randomizeAvatar() {
-    final random = _allQs[_random.nextInt(_allQs.length)];
-    print("Random Pick:");
-    print(random);
-    print("Avatar:");
-    final avatar = Avatar.fromQuestionnaire(random);
-    print(avatar.toString());
-
-    _avatar?.applyAvatar(avatar);
-  }
-
-  void randomizeAnimation() {
-    setState(() {
-      _currentAnimation = _random.nextInt(animations.length);
-      _spineController?.animationState
-          .setAnimationByName(0, animations[_currentAnimation], true);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final $s = ref.watch(intlStringsProvider);
+
     ref.listen(questionnaireStateProvider, (prev, next) {
       final avatar = Avatar.fromQuestionnaire(next);
       _avatar?.applyAvatar(avatar);
+      print(next.techType.name);
     });
+
+    final questionnaire = ref.watch(questionnaireStateProvider);
+    final techType =
+        "${$s[questionnaire.interestType?.name]}-Tech-${$s[questionnaire.techType.name]}";
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -242,67 +225,120 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         onTap: () => context.go('/'),
         child: Stack(
           children: [
-            Center(
+            _buildIconSpinBackground(),
+            _buildAvatarBacklight(),
+            if (_avatar != null) _buildAvatar(),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: 96.sp, vertical: 172.sp),
               child: AnimatedBuilder(
-                  animation: _introController,
-                  builder: (context, child) {
-                    return UnconstrainedBox(
-                      clipBehavior: Clip.hardEdge,
-                      child: ContinuousAnimatedRotation(
-                        duration: Duration(
-                          milliseconds: _iconRotationSpeedTween.value.toInt(),
-                        ),
-                        child: AnimatedBuilder(
-                            animation: _iconColorTween,
-                            builder: (context, child) {
-                              return Opacity(
-                                opacity: 0.75,
-                                child: SvgPicture.asset(
-                                  'assets/icons/enter_icon.svg',
-                                  width: _iconSizeTween.value.w,
-                                  height: _iconSizeTween.value.h,
-                                  color: _introController.isCompleted
-                                      ? _iconColorTween.value
-                                      : _iconIntroColorTween.value,
-                                ),
-                              );
-                            }),
-                      ),
-                    );
-                  }),
-            ),
-            Center(
-              child: Image.asset(
-                'assets/images/result_avatar_backlight.png',
-                opacity: _avatarBacklightOpacityTween,
-                width: 1080.w,
-              ),
-            ),
-            if (_avatar != null)
-              Center(
-                child: AnimatedBuilder(
                   animation: _avatarOpacityTween,
                   builder: (context, child) {
                     return Opacity(
                       opacity: _avatarOpacityTween.value,
-                      child: SizedBox(
-                        width: 984.w,
-                        height: 984.h,
-                        child: spine.SpineWidget.fromDrawable(
-                          _avatar!.drawable,
-                          _spineController!,
-                          boundsProvider: spine.SkinAndAnimationBounds(
-                            animation: 'SLOW WALK',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Dein Technik-Typ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                  color: Colors.white,
+                                ),
                           ),
-                        ),
+                          AutoSizeText(
+                            techType,
+                            wrapWords: false,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.25),
+                                  offset: Offset.zero,
+                                  blurRadius: 10,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     );
-                  },
-                ),
-              ),
+                  }),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAvatar() {
+    return Center(
+      child: AnimatedBuilder(
+        animation: _avatarOpacityTween,
+        builder: (context, child) {
+          return Opacity(
+            opacity: _avatarOpacityTween.value,
+            child: SizedBox(
+              width: 984.w,
+              height: 984.h,
+              child: spine.SpineWidget.fromDrawable(
+                _avatar!.drawable,
+                _spineController!,
+                boundsProvider: spine.SkinAndAnimationBounds(
+                  animation: 'SLOW WALK',
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildAvatarBacklight() {
+    return Center(
+      child: Image.asset(
+        'assets/images/result_avatar_backlight.png',
+        opacity: _avatarBacklightOpacityTween,
+        width: 1080.w,
+      ),
+    );
+  }
+
+  Widget _buildIconSpinBackground() {
+    return Center(
+      child: AnimatedBuilder(
+          animation: _introController,
+          builder: (context, child) {
+            return UnconstrainedBox(
+              clipBehavior: Clip.hardEdge,
+              child: ContinuousAnimatedRotation(
+                duration: Duration(
+                  milliseconds: _iconRotationSpeedTween.value.toInt(),
+                ),
+                child: AnimatedBuilder(
+                    animation: _iconColorTween,
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: 0.75,
+                        child: SvgPicture.asset(
+                          'assets/icons/enter_icon.svg',
+                          width: _iconSizeTween.value.w,
+                          height: _iconSizeTween.value.h,
+                          color: _introController.isCompleted
+                              ? _iconColorTween.value
+                              : _iconIntroColorTween.value,
+                        ),
+                      );
+                    }),
+              ),
+            );
+          }),
     );
   }
 }

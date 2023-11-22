@@ -26,6 +26,14 @@ const Map<String, String> _stringsDe = {
   'button_restart_yes': 'Neustart',
   'button_restart_cancel': 'Weitermachen',
   'button_next': 'Weiter',
+  'skeptic': 'Skeptiker:in',
+  'collector': 'Sammler:in',
+  'influencer': 'Influencer:in',
+  'practical': 'Praktiker:in',
+  'enthusiast': 'Enthusiast:in',
+  'play': 'Gaming',
+  'utility': 'Productivity',
+  'creativity': 'Creative',
 };
 
 const Map<String, String> _stringsEn = {

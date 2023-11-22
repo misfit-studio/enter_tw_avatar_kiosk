@@ -80,7 +80,7 @@ GoRouter router(RouterRef ref) {
       isCalibrating.value = next == PointerState.calibrating;
     });
 
-  final isIdle = ValueNotifier<bool>(true);
+  final isIdle = ValueNotifier<bool>(false);
   ref
     ..onDispose(isIdle.dispose)
     ..listen(pointerDeviceStateNotifierProvider, (_, next) {

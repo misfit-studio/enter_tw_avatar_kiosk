@@ -30,6 +30,8 @@ class _PointerState extends ConsumerState<Pointer> {
 
     // Receive pointer events from the global GestureBinding.
     GestureBinding.instance.pointerRouter.addGlobalRoute((event) {
+      if (!mounted) return;
+
       // When the Pointer moves, normally, a PointerHoverEvent is dispatched.
       // TODO Check if we need to handle other events
       if (event is PointerHoverEvent || event is PointerMoveEvent) {

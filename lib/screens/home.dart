@@ -12,15 +12,6 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // // Listen to the pointer controller. When the device is picked up it goes into the calibration state
-    // // and we navigate to the calibration screen.
-    // ref.listen(pointerDeviceStateNotifierProvider, (prev, next) {
-    //   if (next == PointerState.calibrating) {
-    //     ref.read(questionnaireStateProvider.notifier).reset();
-    //     context.go('/calibration');
-    //   }
-    // });
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(

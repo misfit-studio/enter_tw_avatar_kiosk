@@ -80,9 +80,9 @@ class ProficiencyQuestion extends HookConsumerWidget {
                     ),
                   ),
                   Positioned(
-                    left: 510.sp,
-                    top: 720.sp,
-                    width: 280.w,
+                    left: 470.sp,
+                    top: 730.sp,
+                    width: 320.w,
                     child: EnterContainerButton(
                       onTap: () {
                         selectedProficiency.value = Proficiency.interested;
@@ -100,7 +100,7 @@ class ProficiencyQuestion extends HookConsumerWidget {
                   Positioned(
                     left: 190.sp,
                     top: 930.sp,
-                    width: 220.w,
+                    width: 250.w,
                     child: EnterContainerButton(
                       onTap: () {
                         selectedProficiency.value = Proficiency.casual;

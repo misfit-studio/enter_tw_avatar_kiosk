@@ -51,9 +51,9 @@ const _$ProficiencyEnumMap = {
 };
 
 const _$AssessmentEnumMap = {
-  Assessment.interested: 'interested',
-  Assessment.neutral: 'neutral',
   Assessment.averted: 'averted',
+  Assessment.neutral: 'neutral',
+  Assessment.interested: 'interested',
 };
 
 const _$BroadnessEnumMap = {

@@ -9,6 +9,8 @@ enum InterestType {
   creativity,
 }
 
+extension InterestTypeExtension on InterestType {}
+
 enum Generation {
   babyboomer,
   genX,
@@ -31,10 +33,26 @@ enum Proficiency {
   nerd,
 }
 
+extension ProficiencyExtension on Proficiency {
+  int get points => switch (this) {
+        Proficiency.casual => 1,
+        Proficiency.interested => 2,
+        Proficiency.nerd => 3,
+      };
+}
+
 enum Assessment {
-  interested,
-  neutral,
   averted,
+  neutral,
+  interested,
+}
+
+extension AssessmentExtension on Assessment {
+  int get points => switch (this) {
+        Assessment.averted => 1,
+        Assessment.neutral => 2,
+        Assessment.interested => 3,
+      };
 }
 
 enum Broadness {
@@ -43,10 +61,26 @@ enum Broadness {
   broad,
 }
 
+extension BroadnessExtension on Broadness {
+  int get points => switch (this) {
+        Broadness.limited => 1,
+        Broadness.diverse => 2,
+        Broadness.broad => 3,
+      };
+}
+
 enum Reliance {
   low,
   moderate,
   high,
+}
+
+extension RelianceExtension on Reliance {
+  int get points => switch (this) {
+        Reliance.low => 1,
+        Reliance.moderate => 2,
+        Reliance.high => 3,
+      };
 }
 
 enum Presenation {
@@ -54,6 +88,23 @@ enum Presenation {
   low,
   moderate,
   high,
+}
+
+extension PresenationExtension on Presenation {
+  int get points => switch (this) {
+        Presenation.none => 0,
+        Presenation.low => 1,
+        Presenation.moderate => 2,
+        Presenation.high => 3,
+      };
+}
+
+enum TechType {
+  skeptic,
+  collector,
+  influencer,
+  practical,
+  enthusiast,
 }
 
 @freezed
@@ -97,5 +148,21 @@ class Questionnaire with _$Questionnaire {
         broadness != null &&
         reliance != null &&
         presentation != null;
+  }
+
+  int get totalPoints {
+    return proficiency!.points +
+        assessment!.points +
+        broadness!.points +
+        reliance!.points +
+        presentation!.points;
+  }
+
+  TechType get techType {
+    if (totalPoints <= 3) return TechType.skeptic;
+    if (totalPoints <= 6) return TechType.collector;
+    if (totalPoints <= 9) return TechType.influencer;
+    if (totalPoints <= 12) return TechType.practical;
+    return TechType.enthusiast;
   }
 }
