@@ -1,12 +1,12 @@
 import 'package:enter_bravo_kiosk/components/question_footer.dart';
 import 'package:enter_bravo_kiosk/components/question_header.dart';
+import 'package:enter_bravo_kiosk/components/wiggle_noise_device.dart';
 import 'package:enter_bravo_kiosk/models/questionnaire.dart';
 import 'package:enter_bravo_kiosk/state/intl_provider.dart';
 import 'package:enter_bravo_kiosk/state/questionnaire_provider.dart';
 import 'package:enter_bravo_kiosk/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -108,6 +108,7 @@ class RelianceQuestion extends HookConsumerWidget {
             ),
           ),
           QuestionFooter(
+            disableSubmit: sliderValue.value == 0,
             onSubmit: onSubmit,
           ),
         ],
@@ -154,63 +155,5 @@ class RelianceQuestion extends HookConsumerWidget {
         ],
       ),
     );
-  }
-}
-
-class WiggleNoiseDevice extends HookWidget {
-  final String image;
-  final double width;
-  final double height;
-
-  const WiggleNoiseDevice({
-    super.key,
-    this.image = 'assets/images/phone_placeholder.png',
-    this.width = 200,
-    this.height = 200,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final animation = useAnimationController(
-      duration: const Duration(milliseconds: 100),
-    )..repeat(reverse: true);
-
-    final splashAnimation = useAnimationController(
-      duration: const Duration(milliseconds: 500),
-    )..repeat();
-
-    return AnimatedBuilder(
-        animation: animation,
-        builder: (context, child) {
-          return Stack(
-            alignment: Alignment.center,
-            children: [
-              Opacity(
-                opacity: 1 - splashAnimation.value,
-                child: Transform.scale(
-                  scale: splashAnimation.value,
-                  child: Container(
-                    width: width * 2.w,
-                    height: width * 2.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 4.sp,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Transform.rotate(
-                angle: animation.value * 0.1,
-                child: Image.asset(
-                  image,
-                  width: width.w,
-                ),
-              ),
-            ],
-          );
-        });
   }
 }
