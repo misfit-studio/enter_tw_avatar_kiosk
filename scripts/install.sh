@@ -16,6 +16,3 @@ sudo make install
 cd /home/pi
 git clone https://github.com/misfit-studio/enter_tw_avatar_kiosk.git
 sudo cp enter_tw_avatar_kiosk/bin/libspine_flutter.so /usr/lib
-
-cp enter_tw_avatar_kiosk/scripts/startup.sh /home/pi
-echo "/home/pi/startup.sh" >> /etc/rc.local

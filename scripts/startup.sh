@@ -43,7 +43,8 @@ if version_gt $LATEST_VERSION $LOCAL_VERSION; then
     unzip -o "./release.zip" -d "."
     echo $LATEST_VERSION > "$LOCAL_VERSION_FILE"
     echo "Update complete."
-    run_command &  # Run the command in the background
 else
     echo "You are up to date. Current version: $LOCAL_VERSION."
 fi
+
+run_command &  # Run the command in the background
