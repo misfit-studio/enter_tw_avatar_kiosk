@@ -8,7 +8,7 @@ REPO="enter_tw_avatar_kiosk"
 LOCAL_VERSION_FILE="/home/pi/version.txt"
 
 # Preconfigured command to run after update
-RUN_COMMAND="flutter-pi --videomode 1280x720 --orientation portrait_up --release ./flutter_assets/"
+RUN_COMMAND="flutter-pi --videomode 1280x720 --orientation portrait_up --release /home/pi/flutter_assets/"
 
 # Function to compare versions
 version_gt() { test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1"; }
