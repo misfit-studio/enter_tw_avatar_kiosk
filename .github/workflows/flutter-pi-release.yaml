@@ -24,7 +24,7 @@ jobs:
         run: flutter pub get
         
       - name: Run Build Runner
-        run: flutter pub run build_runner build
+        run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build Flutter App
         run: flutterpi_tool build --arch=arm64 --cpu=pi4 --release --verbose
