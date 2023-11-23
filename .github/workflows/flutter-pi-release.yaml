@@ -33,7 +33,7 @@ jobs:
         uses: montudor/action-zip@v1
 
       - name: Compress build files
-        run: zip -qq -r ./rpi4_arm64_release.zip . -i ./build/flutter_assets
+        run: zip -qq -r ./rpi4_arm64_release.zip ./flutter_assets
         working-directory: ./build
 
       - name: Get commit count
