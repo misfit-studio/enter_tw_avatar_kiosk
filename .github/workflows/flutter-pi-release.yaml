@@ -23,18 +23,18 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
         
-      # - name: Run Build Runner
-      #   run: flutter pub run build_runner build
+      - name: Run Build Runner
+        run: flutter pub run build_runner build
 
-      # - name: Build Flutter Web App
-      #   run: flutter build web --release --web-renderer html
+      - name: Build Flutter App
+        run: flutterpi_tool build --arch=arm64 --cpu=pi4 --release --verbose
 
-      # - name: Install zip
-      #   uses: montudor/action-zip@v1
+      - name: Install zip
+        uses: montudor/action-zip@v1
 
-      # - name: Compress build files
-      #   run: zip -qq -r ./web.zip ./web
-      #   working-directory: ./build
+      - name: Compress build files
+        run: zip -qq -r ./rpi4_arm64_release.zip ./build/flutter_assets
+        working-directory: ./build
 
       # - name: Get commit count
       #   id: get_commit_count
