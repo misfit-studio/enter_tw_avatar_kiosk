@@ -59,6 +59,12 @@ class CalibrationScreen extends HookConsumerWidget {
           Timer(const Duration(seconds: 5), () {
             calibrationCompleted.value = false;
           });
+
+          final pointerButtonState =
+              ref.read(pointerButtonStateNotifierProvider);
+          if (!pointerButtonState.btnA && context.mounted) {
+            context.go(from ?? '/language');
+          }
         }
       }
 
