@@ -52,6 +52,8 @@ dependencies:
   flutter_screenutil: ^5.9.0
   linux_serial: ^0.2.3+6
   auto_size_text: ^3.0.0
+  qr_flutter: ^4.1.0
+  http: ^1.1.2
 
 dependency_overrides:
   raw_image_provider:

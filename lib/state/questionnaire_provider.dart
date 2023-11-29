@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:enter_bravo_kiosk/models/questionnaire.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:http/http.dart' as http;
 
 part 'questionnaire_provider.g.dart';
 
@@ -34,5 +37,24 @@ class QuestionnaireState extends _$QuestionnaireState {
       reliance: reliance ?? state.reliance,
       presentation: presentation ?? state.presentation,
     );
+
+    if (state.isCompleted) {
+      print('Questionnaire is completed');
+
+      http
+          .post(
+            Uri.parse('http://cms.enter.ch/api/analytics/avatar/'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode({
+              'data': state.toJson(),
+            }),
+          )
+          .then((value) => print(value.body))
+          .catchError((error) {
+        print(error);
+      });
+    }
   }
 }
