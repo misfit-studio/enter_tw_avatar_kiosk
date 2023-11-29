@@ -171,7 +171,7 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
 
   void _handleStabilityChanged(StabilityStatus status) {
     if (status == StabilityStatus.inMotion && state == PointerState.idle) {
-      state = PointerState.calibrating;
+      startCalibration();
     }
     if (status == StabilityStatus.hanging) {
       state = PointerState.idle;
