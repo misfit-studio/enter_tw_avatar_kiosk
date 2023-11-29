@@ -245,7 +245,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
-        onTap: () {
+        onLongPress: () {
           if (_introController.isCompleted) context.go('/');
         },
         child: Stack(
