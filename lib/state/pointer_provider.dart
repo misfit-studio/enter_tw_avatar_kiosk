@@ -117,6 +117,7 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
   DateTime? _pointerDownTime;
   DateTime? _pointerExitTime;
   Timer? _trackPointerTimer;
+  Timer? _stabilityIdleTimer;
 
   void _listenToSerialProtocol() {
     final protocol = ref.watch(serialProtocolProvider);
@@ -170,11 +171,14 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
   }
 
   void _handleStabilityChanged(StabilityStatus status) {
+    _stabilityIdleTimer?.cancel();
     if (status == StabilityStatus.inMotion && state == PointerState.idle) {
       startCalibration();
     }
     if (status == StabilityStatus.hanging) {
-      state = PointerState.idle;
+      _stabilityIdleTimer = Timer(const Duration(seconds: 5), () {
+        state = PointerState.idle;
+      });
     }
   }
 
