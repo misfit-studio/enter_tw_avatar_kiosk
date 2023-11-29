@@ -124,9 +124,46 @@ class Questionnaire with _$Questionnaire {
   factory Questionnaire.fromJson(Map<String, dynamic> json) =>
       _$QuestionnaireFromJson(json);
 
+  factory Questionnaire.fromBinaryString(String str) {
+    final binary = int.parse(str, radix: 16);
+    final generation = Generation.values[(binary >> 12) & 0x3];
+    final interestType = InterestType.values[(binary >> 10) & 0x3];
+    final proficiency = Proficiency.values[(binary >> 8) & 0x3];
+    final assessment = Assessment.values[(binary >> 6) & 0x3];
+    final broadness = Broadness.values[(binary >> 4) & 0x3];
+    final reliance = Reliance.values[(binary >> 2) & 0x3];
+    final presentation = Presenation.values[(binary >> 0) & 0x3];
+
+    return Questionnaire(
+      generation: generation,
+      interestType: interestType,
+      proficiency: proficiency,
+      assessment: assessment,
+      broadness: broadness,
+      reliance: reliance,
+      presentation: presentation,
+    );
+  }
+
   @override
   String toString() {
     return "Questionnaire([$interestType/$generation] - $proficiency | $assessment | $broadness | $reliance | $presentation)";
+  }
+
+  String encodeBinary() {
+    if (!isCompleted) {
+      throw Exception('Questionnaire is not completed');
+    }
+
+    final binary = (generation!.index << 12) |
+        (interestType!.index << 10) |
+        (proficiency!.index << 8) |
+        (assessment!.index << 6) |
+        (broadness!.index << 4) |
+        (reliance!.index << 2) |
+        (presentation!.index << 0);
+
+    return binary.toRadixString(16).toUpperCase();
   }
 
   int get questionIndex {

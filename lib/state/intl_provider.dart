@@ -37,6 +37,7 @@ const Map<String, String> _stringsDe = {
   'dialog_restart_title': 'Möchtest du wirklich neu starten?',
   'dialog_restart_description':
       'Dadurch werden alle bisherigen Antworten gelöscht und du musst von vorne beginnen.',
+  'result_share_cta': 'Scanne den QR-Code und teile dein Ergebnis!',
   'button_restart_yes': 'Neustart',
   'button_restart_cancel': 'Weitermachen',
   'button_next': 'Weiter',
@@ -87,6 +88,7 @@ const Map<String, String> _stringsEn = {
   'dialog_restart_title': 'Do you really want to restart?',
   'dialog_restart_description':
       'This will delete all previous answers and you will have to start over.',
+  'result_share_cta': 'Scan the QR code and share your result!',
   'button_restart_yes': 'Restart',
   'button_restart_cancel': 'Continue',
   'button_next': 'Next',
@@ -137,6 +139,7 @@ const Map<String, String> _stringsFr = {
   'dialog_restart_title': 'Tu veux vraiment tout recommencer?',
   'dialog_restart_description':
       'Ça va supprimer toutes tes réponses précédentes et tu devras tout recommencer.',
+  'result_share_cta': 'Scanne le QR code et partage ton résultat!',
   'button_restart_yes': 'Recommencer',
   'button_restart_cancel': 'Continuer',
   'button_next': 'Suivant',

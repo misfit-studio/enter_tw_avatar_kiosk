@@ -52,6 +52,8 @@ dependencies:
   flutter_screenutil: ^5.9.0
   linux_serial: ^0.2.3+6
   auto_size_text: ^3.0.0
+  qr_flutter: ^4.1.0
+  http: ^1.1.2
 
 dependency_overrides:
   raw_image_provider:
@@ -68,6 +70,7 @@ dev_dependencies:
   custom_lint: ^0.5.3
   riverpod_lint: ^2.1.0
   riverpod_generator: ^2.2.3
+  test: ^1.24.9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:spine_flutter/spine_flutter.dart' as spine;
 
 class ResultScreen extends ConsumerStatefulWidget {
@@ -32,6 +33,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   late Animation<Color?> _iconColorTween;
   late Animation<double> _avatarBacklightOpacityTween;
   late Animation<double> _avatarOpacityTween;
+  late Animation<double> _ctaSlideTween;
 
   EnterAvatar? _avatar;
   spine.SpineWidgetController? _spineController;
@@ -212,6 +214,17 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         curve: Curves.ease,
       ),
     ));
+
+    _ctaSlideTween = Tween<double>(begin: 500, end: 0).animate(
+      CurvedAnimation(
+        parent: _introController,
+        curve: const Interval(
+          0.9,
+          1.0,
+          curve: Curves.ease,
+        ),
+      ),
+    );
   }
 
   @override
@@ -283,6 +296,21 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                     );
                   }),
             ),
+            AnimatedBuilder(
+              animation: _ctaSlideTween,
+              builder: (context, child) {
+                return Positioned(
+                  bottom: 96.sp,
+                  left: 96.sp,
+                  right: 96.sp,
+                  child: Transform.translate(
+                    offset: Offset(0, _ctaSlideTween.value.sp),
+                    child: child,
+                  ),
+                );
+              },
+              child: SocialCTAWidget(questionnaire: questionnaire),
+            ),
           ],
         ),
       ),
@@ -352,6 +380,43 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
               ),
             );
           }),
+    );
+  }
+}
+
+class SocialCTAWidget extends ConsumerWidget {
+  final Questionnaire questionnaire;
+
+  const SocialCTAWidget({
+    super.key,
+    required this.questionnaire,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final $s = ref.watch(intlStringsProvider);
+    final lang = ref.watch(selectedLanguageProvider);
+
+    return Material(
+      borderRadius: BorderRadius.circular(36.sp),
+      child: Padding(
+        padding: EdgeInsets.all(32.sp),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                $s['result_share_cta'] ?? '',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            QrImageView(
+              size: 200.sp,
+              data:
+                  "https://enter-tw-avatar.web.app/result/${questionnaire.encodeBinary()}?lang=${lang.name}",
+            )
+          ],
+        ),
+      ),
     );
   }
 }
