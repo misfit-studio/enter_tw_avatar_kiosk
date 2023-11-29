@@ -100,11 +100,13 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
   Offset _delta = const Offset(0, 0);
   Offset _globalPosition = const Offset(0, 0);
 
-  double _xExtent = 10;
-  double _yExtent = 5 * 1.77;
+  final double _xExtent = 10;
+  final double _yExtent = 5 * 1.77;
 
   double _yaw = 0;
   double _pitch = 0;
+
+  Timer? _calibrationTimeout;
 
   CalibrationStatus _calibrationStatus = CalibrationStatus.uncalibrated;
   StabilityStatus _stabilityStatus = StabilityStatus.unknown;
@@ -239,6 +241,10 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
   void startCalibration() {
     _log.fine("Starting calibration");
     state = PointerState.calibrating;
+    _calibrationTimeout = Timer(const Duration(seconds: 30), () {
+      _log.fine("Calibration timed out");
+      state = PointerState.idle;
+    });
   }
 
   Future<void> commitCalibration() async {
@@ -247,6 +253,7 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
 
     _log.fine("Was calibrated");
     state = PointerState.active;
+    _calibrationTimeout?.cancel();
     _sendPointerEvents();
   }
 }
