@@ -146,7 +146,7 @@ class UsbSerialService {
       final port = ports.singleWhere((p) => p.name == 'ttyUSB0');
 
       /// open the port, so we can read and write things to it
-      _serialPortHandle = port.open(baudrate: Baudrate.b115200);
+      _serialPortHandle = port.open(baudrate: Baudrate.b57600);
 
       _serialPortHandle?.stream.listen((data) {
         _serialDataStreamController.add(Uint8List.fromList(data));
