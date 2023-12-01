@@ -245,6 +245,7 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
   void startCalibration() {
     _log.fine("Starting calibration");
     state = PointerState.calibrating;
+    _calibrationTimeout?.cancel();
     _calibrationTimeout = Timer(const Duration(seconds: 30), () {
       _log.fine("Calibration timed out");
       state = PointerState.idle;
@@ -256,8 +257,8 @@ class PointerDeviceStateNotifier extends _$PointerDeviceStateNotifier {
     await protocol.calibrate();
 
     _log.fine("Was calibrated");
-    state = PointerState.active;
     _calibrationTimeout?.cancel();
+    state = PointerState.active;
     _sendPointerEvents();
   }
 }
