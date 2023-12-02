@@ -93,12 +93,14 @@ GoRouter router(RouterRef ref) {
       redirect: (context, state) {
         final from = state.fullPath;
 
-        if (isIdle.value && from != '/') {
+        if (isIdle.value && from != '/' && from != '/result') {
           ref.read(questionnaireStateProvider.notifier).reset();
           return '/';
         }
 
-        if (isCalibrating.value && from != '/calibration') {
+        if (isCalibrating.value &&
+            from != '/calibration' &&
+            from != '/result') {
           if (from == '/') return '/calibration';
           return '/calibration/?from=${from?.replaceAll('/', '%2F')}';
         }

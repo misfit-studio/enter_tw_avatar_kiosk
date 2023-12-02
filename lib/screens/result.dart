@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -38,6 +39,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   EnterAvatar? _avatar;
   spine.SpineWidgetController? _spineController;
 
+  Timer? exitTimer;
+
   final int _currentAnimation = 1;
   final _random = Random();
   static const animationsHappy = [
@@ -63,6 +66,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
 
     _load();
     _initAnimations();
+
+    exitTimer = Timer(const Duration(seconds: 45), () {
+      context.go('/');
+    });
   }
 
   @override
@@ -245,7 +252,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
-        onLongPress: () {
+        onDoubleTap: () {
           if (_introController.isCompleted) context.go('/');
         },
         child: Stack(
