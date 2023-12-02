@@ -24,6 +24,7 @@ class ImageChooserBox extends HookWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onTap,
         onHover: (state) => hovering.value = state,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,

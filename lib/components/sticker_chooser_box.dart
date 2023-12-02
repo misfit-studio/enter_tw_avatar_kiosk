@@ -22,6 +22,7 @@ class StickerChooserBox extends HookWidget {
     final hovering = useState(false);
     return InkWell(
       onTap: onTap,
+      onLongPress: onTap,
       onHover: (value) => hovering.value = value,
       splashColor: Colors.transparent,
       hoverColor: Colors.transparent,

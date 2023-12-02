@@ -126,6 +126,7 @@ class EnterContainerButton extends HookConsumerWidget {
       onTapCancel: () => onHoverStateChanged(false),
       onTapUp: (_) => onHoverStateChanged(false),
       onTap: onTap,
+      onLongPress: onTap,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       borderRadius: BorderRadius.all(Radius.circular(96.sp)),
